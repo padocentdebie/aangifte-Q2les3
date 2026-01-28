@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Q2les 2 - Aangifte Mishandeling</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        :root { --dark: #0a0a0a; --accent: #ff0000; --police: #1a2a6c; }
+        body { background-color: var(--dark); color: #ddd; font-family: 'Consolas', monospace; margin: 0; padding: 20px; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+        .main-wrapper { display: flex; gap: 20px; max-width: 1600px; margin: auto; flex: 1; min-height: 0; }
+        
+        #chat-section { flex: 1; background: #111; border: 1px solid #333; display: flex; flex-direction: column; border-radius: 4px; }
+        #messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #000; }
+        .status-header { background: #222; padding: 10px; color: #fff; font-size: 0.8em; text-align: center; border-bottom: 2px solid var(--accent); }
+        
+        #aangifte-section { flex: 1.5; background: #fff; padding: 25px; color: #111; overflow-y: auto; border-radius: 4px; display: flex; flex-direction: column; }
+        
+        .bubble { max-width: 85%; padding: 12px; font-size: 0.9em; line-height: 1.4; border-radius: 2px; }
+        .bot { align-self: flex-start; background: #1a1a1a; color: #00ff00; border-left: 4px solid var(--accent); }
+        .user-msg { align-self: flex-end; background: var(--police); color: white; }
+        
+        textarea { width: 100%; min-height: 250px; border: 2px solid #333; padding: 15px; font-family: 'Courier New', monospace; font-size: 1em; margin-bottom: 15px; box-sizing: border-box; }
+        
+        .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; background: #f0f0f0; padding: 15px; border-radius: 4px; }
+        .check-item { display: flex; align-items: center; gap: 8px; font-size: 0.7em; font-weight: bold; color: #333; }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; background: #ccc; }
+        .dot-green { background: #27ae60; box-shadow: 0 0 5px #27ae60; }
+        .dot-red { background: #e74c3c; }
+
+        button { padding: 15px; cursor: pointer; border: none; font-weight: bold; text-transform: uppercase; }
+        .btn-submit { background: var(--police); color: white; width: 100%; font-size: 1.1em; }
+        .btn-submit:hover { background: #000; }
+        
+        #archive-section { margin-top: 30px; border-top: 3px solid var(--police); padding-top: 20px; }
+        .archive-item { background: #f9f9f9; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-left: 5px solid var(--police); font-family: 'Arial', sans-serif; color: #333; }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <div id="chat-section">
+        <div class="status-header">SYSTEEM: VERHOOR SAMIR (22J) - MISHANDELING</div>
+        <div id="messages">
+            <div class="bubble bot"><b>SAMIR:</b> Faka. Die gast moet hangen man. Hij pakt me gewoon vol bij die garage. Wat wil je weten?</div>
+        </div>
+        <div style="padding:15px; background:#111; display:flex; gap:10px;">
+            <input type="text" id="botInput" style="flex:1; padding:12px; background:#000; border:1px solid #333; color:#0f0;" placeholder="Stel je vraag..." onkeypress="if(event.key==='Enter') chat()">
+            <button onclick="chat()" style="background:#333; color:white;">VRAAG</button>
+        </div>
+    </div>
+
+    <div id="aangifte-section">
+        <div id="pdf-content">
+            <h2 style="margin:0; text-align: center; text-decoration: underline;">PROCES-VERBAAL VAN AANGIFTE</h2>
+            <p style="text-align: center; font-size: 0.8em;">Nummer: PL0900-2024-SAMIR</p>
+            
+            <textarea id="pvInput" placeholder="Stel hier de aangifte op. Gebruik de onvoltooid verleden tijd..." oninput="checkPV()"></textarea>
+            
+            <div class="check-grid no-print">
+                <div class="check-item"><div id="c1" class="status-dot"></div>Mishandeling</div>
+                <div class="check-item"><div id="c2" class="status-dot"></div>Opzettelijk</div>
+                <div class="check-item"><div id="c3" class="status-dot"></div>Pijn of letsel</div>
+                <div class="check-item"><div id="c4" class="status-dot"></div>Gouden W's</div>
+                <div class="check-item"><div id="c5" class="status-dot"></div>Wederkerigheid</div>
+                <div class="check-item"><div id="c6" class="status-dot"></div>Wetenschap</div>
+                <div class="check-item"><div id="c7" class="status-dot"></div>Actieve OVT</div>
+                <div class="check-item"><div id="c8" class="status-dot"></div>Decorstukken</div>
+            </div>
+        </div>
+        
+        <button class="btn-submit no-print" onclick="submitPV()">INLEVEREN & PUBLICEREN</button>
+        
+        <div id="archive-section">
+            <h3 style="margin-top:0;">OPENBAAR ARCHIEF (INGELEVERD WERK)</h3>
+            <div id="feed-container"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const firebaseConfig = { apiKey: "AIzaSyC-Of0AUOd-kVo2RKxYc-68Gr-RO4HdRk0", authDomain: "q2aangifteles2.firebaseapp.com", databaseURL: "https://q2aangifteles2-default-rtdb.europe-west1.firebasedatabase.app", projectId: "q2aangifteles2" };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    let usedResponses = [];
+    let lastResponse = "";
+
+    const responses = {
+        wie: ["Ik ben Samir el Idrissi, 22 jaar, uit Utrecht.", "Samir el Idrissi, ik word dit jaar 23.", "Mijn naam is Samir el Idrissi, ik ben 22.", "Ik ben Samir, 22 jaar oud en woon in de stad."],
+        tijd: ["Rond 04:30 uur vannacht man.", "Het was half 5 in de ochtend ongeveer.", "Precies 04:30 uur, ik zag het op m'n telefoon.", "Vannacht diep in de nacht, rond een uur of half 5."],
+        plek: ["Voor de ingang van de Springweg garage, Stadhuisplein 4.", "Op het Stadhuisplein 4, bij die parkeergarage.", "Dat was bij de ingang van de Springweg garage op nummer 4.", "Stadhuisplein 4 in Utrecht, daar bij die ingang."],
+        hoe: ["Die lijper geeft me een dichte vuist op m'n kaak.", "Ineens krijg ik een vuistslag op m'n bakkes.", "Hij haalt uit en raakt me vol met z'n vuist op m'n kaak.", "Die gast sloeg me gewoon met z'n vuist."],
+        terug: ["Ik gaf hem direct een klap terug op z'n neus.", "Ik sloeg hem ook een keer, bam op z'n gok.", "Ik liet me niet doen en gaf een tik terug op z'n neus.", "Uit reflex gaf ik die gozer een klap terug op z'n neus."],
+        dader: ["Hij is breed, kaal met zo'n overloop kapsel.", "Grote gast, geschoren hoofd, echt een overloopje.", "Hij was echt een boom man, kaal geschoren zijkanten.", "Die dader was groot en had een overloop kapsel."],
+        kleding: ["Zwarte North Face jas en witte Jordans.", "Hij rockte een North Face en witte Jordans.", "Zijn jas was van North Face, zwart, met witte patta's.", "Hij droeg witte Jordans en een zwarte North Face."],
+        litteken: ["Hij heeft een litteken bij z'n linkerwenkbrauw.", "Er zat een litteken boven zijn linker oog.", "Ik zag een litteken bij z'n wenkbrauw aan de linkerkant.", "Die gast heeft een litteken links bij z'n oog."],
+        omgeving: ["Er lag een omgevallen fatbike en glas van een flesje.", "Ik zag een fatbike op de grond en kapot glas.", "Op de grond lag een bierflesje en een fatbike op z'n kant.", "Overal lag glas en er stond een fatbike schuin op de grond."],
+        schade: ["M'n Daily Paper shirt is helemaal kapot.", "Check m'n Daily Paper shirt, gescheurd man.", "Dat dure Daily Paper shirt van me is naar de haaien.", "M'n shirt van Daily Paper is helemaal doormidden gescheurd."],
+        onbekend: ["Ewa, ik snap je vraag niet.", "Vraag normale dingen over die diefstal ofzo.", "Ik weet niet wat je bedoelt."]
+    };
+
+    function chat() {
+        const input = document.getElementById('botInput');
+        const v = input.value.toLowerCase();
+        if(!v) return;
+        addBubble(input.value, 'user-msg');
+        input.value = '';
+
+        setTimeout(() => {
+            if (v.includes("herhaal") || v.includes("nog een keer") || v.includes("wat zei je")) {
+                addBubble("Ik zei: " + lastResponse, 'bot');
+                return;
+            }
+
+            let cat = "onbekend";
+            if (v.includes("wie") || v.includes("naam")) cat = "wie";
+            else if (v.includes("wanneer") || v.includes("tijd") || v.includes("hoe laat")) cat = "tijd";
+            else if (v.includes("waar") || v.includes("adres") || v.includes("plek")) cat = "plek";
+            else if (v.includes("hoe") || v.includes("gebeurd") || v.includes("klap") || v.includes("vuist")) cat = "hoe";
+            else if (v.includes("terug") || v.includes("geslagen")) cat = "terug";
+            else if (v.includes("dader") || v.includes("eruit")) cat = "dader";
+            else if (v.includes("kleding") || v.includes("jas") || v.includes("jordans")) cat = "kleding";
+            else if (v.includes("litteken")) cat = "litteken";
+            else if (v.includes("omgeving") || v.includes("fatbike") || v.includes("glas")) cat = "omgeving";
+            else if (v.includes("schade") || v.includes("shirt")) cat = "schade";
+
+            let options = responses[cat].filter(r => !usedResponses.includes(r));
+            if (options.length === 0) { options = responses[cat]; usedResponses = usedResponses.filter(r => !responses[cat].includes(r)); }
+            
+            let final = options[Math.floor(Math.random() * options.length)];
+            usedResponses.push(final);
+            lastResponse = final;
+            addBubble(final, 'bot');
+        }, 500);
+    }
+
+    function addBubble(t, s) {
+        const d = document.createElement('div');
+        d.className = `bubble ${s}`;
+        d.innerHTML = s === 'bot' ? `<b>SAMIR:</b> ${t}` : t;
+        const m = document.getElementById('messages');
+        m.appendChild(d);
+        m.scrollTop = m.scrollHeight;
+    }
+
+    function checkPV() {
+        const t = document.getElementById('pvInput').value.toLowerCase();
+        const update = (id, c) => document.getElementById(id).className = c ? "status-dot dot-green" : "status-dot dot-red";
+        
+        update("c1", t.includes("mishandeling") || t.includes("mishandeld"));
+        update("c2", t.includes("opzettelijk"));
+        update("c3", t.includes("pijn") || t.includes("letsel"));
+        update("c4", t.includes("stadhuisplein") && t.includes("04:30"));
+        update("c5", t.includes("klap terug") || t.includes("sloeg ik hem"));
+        update("c6", /ik\s+(verklaar|zag|hoorde|merkte)/i.test(t));
+        update("c7", /\b(sloeg|zag|hoorde|stond|kwam|gaf|raakte)\b/i.test(t));
+        update("c8", t.includes("fatbike") || t.includes("glas"));
+    }
+
+    function submitPV() {
+        const txt = document.getElementById('pvInput').value.trim();
+        if(!txt) { alert("Je tekstvak is leeg!"); return; }
+        db.ref('samir_public_archief').push({ tekst: txt, timestamp: new Date().toLocaleString() });
+        document.getElementById('pvInput').value = '';
+        checkPV();
+        alert("PV succesvol ingeleverd en gepubliceerd!");
+    }
+
+    db.ref('samir_public_archief').on('value', (s) => {
+        const container = document.getElementById('feed-container');
+        container.innerHTML = "";
+        const data = s.val();
+        if(data) {
+            Object.keys(data).reverse().forEach(k => {
+                const i = data[k];
+                const div = document.createElement('div');
+                div.className = 'archive-item';
+                div.innerHTML = `<small>${i.timestamp}</small><p>${i.tekst}</p>`;
+                container.appendChild(div);
+            });
+        }
+    });
+</script>
+</body>
+</html>
