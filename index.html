@@ -31,11 +31,6 @@
         
         h1 { font-family: 'Oswald', sans-serif; font-size: 24px; margin: 0; letter-spacing: 1px; }
 
-        .disclaimer {
-            background: var(--politie-geel); padding: 8px 25px; font-size: 11px; 
-            text-transform: none; border-bottom: 1px solid #e6db74; flex-shrink: 0;
-        }
-
         .main-layout { display: grid; grid-template-columns: 450px 1fr; flex-grow: 1; overflow: hidden; }
 
         /* LINKS: INTERACTIEVE CHAT SAMIR */
@@ -100,7 +95,7 @@
         .inlever-button { width: 100%; padding: 15px; background: var(--politie-donkerblauw); color: white; font-family: 'Oswald'; border: none; cursor: pointer; font-size: 18px; }
         #highlightbox { white-space: pre-wrap; line-height: 2.3; font-size: 17px; text-transform: none; color: #222; min-height: 80px; padding: 15px; }
 
-        .score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
+        .score-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 15px; }
         .score-unit { background: #f8f9fa; padding: 10px; text-align: center; border: 1px solid #eee; }
         .score-val { font-family: 'Oswald'; font-size: 22px; display: block; }
         
@@ -108,30 +103,35 @@
         .hl-vd { background-color: var(--fout-rood); color: white; padding: 2px 4px; }
         .hl-wet { border-bottom: 3px solid var(--politie-donkerblauw); font-weight: bold; }
         .hl-w { background-color: var(--politie-geel); border-bottom: 2px solid var(--politie-goud); font-weight: bold; }
+        .hl-bestanddeel { background-color: #d1c4e9; border: 1px dashed #512da8; }
+
+        footer {
+            background: var(--politie-geel); padding: 10px 25px; font-size: 11px; 
+            text-transform: none; border-top: 4px solid var(--politie-donkerblauw); flex-shrink: 0;
+        }
     </style>
 </head>
 <body>
 
 <header><h1>Q2 LES 3 PV AANGIFTE</h1></header>
-<div class="disclaimer">PRIVACY: UW CHAT EN PV WORDEN NIET OPGESLAGEN OF VERZONDEN.</div>
 
 <div class="main-layout">
     <aside class="chat-kolom">
         <div id="chatWindow">
             <div class="chat-bubble">
                 <div class="samir-naam">SAMIR</div>
-                <div class="samir-tekst">"Ewa faka strijder! Ik kom aangifte doen man. Die actie gister was echt niet lauw. Vraag me wat er is gebeurd dan?"</div>
+                <div class="samir-tekst">"Yo agent, rustig? Ik moet die aangifte fixen man. Die situatie gister was echt skeer, ik ben zwaar genakt. Vraag maar wat je moet weten."</div>
             </div>
         </div>
         <div class="chat-input-area">
-            <input type="text" id="samirVraag" placeholder="Stel Samir een vraag (bijv. waar?)...">
+            <input type="text" id="samirVraag" placeholder="Stel Samir een vraag (bijv. wat is er gestolen?)...">
             <button onclick="stuurVraag()" style="background:var(--politie-goud); border:none; padding:10px; cursor:pointer; font-weight:bold;">SPOUT</button>
         </div>
     </aside>
 
     <main class="werk-kolom">
         <section class="blok">
-            <div class="titel-blok">1. FORMALISEER DE AANGIFTE</div>
+            <div class="titel-blok">1. MAAK HIER AANGIFTE OP</div>
             <textarea id="pvInput" placeholder="Vertaal de verzamelde informatie naar een formeel PV..."></textarea>
             <button class="inlever-button" onclick="analyseerTekst()">ANALYSEER & LEVER IN</button>
         </section>
@@ -144,6 +144,7 @@
                 <div class="score-unit"><span class="score-val" id="s-wet">0</span>WETENSCHAP</div>
                 <div class="score-unit"><span class="score-val" id="s-ovt">0</span>OVT</div>
                 <div class="score-unit"><span class="score-val" id="s-vd">0</span>VOLT. DW.</div>
+                <div class="score-unit" style="background: #ede7f6;"><span class="score-val" id="s-best">0</span>BESTANDDEEL</div>
             </div>
         </section>
 
@@ -154,6 +155,10 @@
     </main>
 </div>
 
+<footer>
+    PRIVACY: UW CHAT EN PV WORDEN LOKAAL VERWERKT EN NIET OPGESLAGEN OF VERZONDEN NAAR EXTERNE SERVERS.
+</footer>
+
 <script>
 let fase = 0;
 const samirAntwoorden = [
@@ -163,6 +168,12 @@ const samirAntwoorden = [
     "Hij pakt gewoon m'n fittie (telefoon) uit m'n hand man!",
     "Hij had een mes in z'n hand, daarom deed ik niks.",
     "Hij rende weg richting die steeg bij de Febo. Ik ben 'm kwijt."
+];
+
+// Bestanddeelteksten uit WvSr (bijv Art 310, 312)
+const bestanddelen = [
+    "toeëigenen", "enig goed", "geheel of ten dele", "oogmerk", "wederrechtelijk", 
+    "geweld", "bedreiging met geweld", "braak", "valse sleutels", "inklimming"
 ];
 
 function stuurVraag() {
@@ -185,20 +196,35 @@ function stuurVraag() {
 function analyseerTekst() {
     let tekst = document.getElementById('pvInput').value;
     if(!tekst) return;
-    let h = { w:0, ovt:0, vd:0, wet:0 };
+    let h = { w:0, ovt:0, vd:0, wet:0, best:0 };
+    
     const wLijst = ["wie", "wat", "waar", "wanneer", "waarom", "waarmee", "hoe"];
-    const wetWoorden = ["zag dat", "hoorde dat", "nam waat dat", "verklaarde dat"];
+    const wetWoorden = ["zag dat", "hoorde dat", "nam waarnam dat", "verklaarde dat", "bevond zich"];
 
+    // 1. Check Bestanddelen (Strafvordering/Wetboek)
+    bestanddelen.forEach(b => {
+        let r = new RegExp('\\b'+b+'\\b', 'gi');
+        if(tekst.match(r)) {
+            tekst = tekst.replace(r, m => { h.best++; return `<span class="hl-bestanddeel">${m}</span>`; });
+        }
+    });
+
+    // 2. Check Gouden W's
     wLijst.forEach(w => {
         let r = new RegExp('\\b'+w+'\\b', 'gi');
-        tekst = tekst.replace(r, m => { h.w++; return `<span class="hl-w">${m}</span>`; });
+        tekst = tekst.replace(r, m => { if(m.includes('<span')) return m; h.w++; return `<span class="hl-w">${m}</span>`; });
     });
+
+    // 3. Check Wetenschap/Waarneming
     wetWoorden.forEach(w => {
         let r = new RegExp(w, 'gi');
-        tekst = tekst.replace(r, m => { h.wet++; return `<span class="hl-wet">${m}</span>`; });
+        tekst = tekst.replace(r, m => { if(m.includes('<span')) return m; h.wet++; return `<span class="hl-wet">${m}</span>`; });
     });
+
+    // 4. Grammatica (OVT & Voltooid Deelwoord)
     const ovtRegex = /\b(liep|stond|keek|zag|hoorde|pakte|rende|kwam|sloeg|bevond|waarnam|verklaarde)\b|\b(\w+(de|te|den|ten))\b/gi;
     tekst = tekst.replace(ovtRegex, m => { if(m.includes('<span')) return m; h.ovt++; return `<span class="hl-ovt">${m}</span>`; });
+    
     const vdRegex = /\b(heb|heeft|ben|is|was|werd|wordt)\s+(\w+([dt]))\b|\b(ge\w+[dt])\b/gi;
     tekst = tekst.replace(vdRegex, m => { if(m.includes('<span')) return m; h.vd++; return `<span class="hl-vd">${m}</span>`; });
 
@@ -207,6 +233,7 @@ function analyseerTekst() {
     document.getElementById('s-wet').innerText = h.wet;
     document.getElementById('s-ovt').innerText = h.ovt;
     document.getElementById('s-vd').innerText = h.vd;
+    document.getElementById('s-best').innerText = h.best;
 }
 </script>
 </body>
