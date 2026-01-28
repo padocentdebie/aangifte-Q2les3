@@ -2,81 +2,96 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Q2les 2 - Aangifte Mishandeling</title>
+    <title>Q2les 2 - Aangifte Samir el Idrissi</title>
+    
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
-        :root { --dark: #0a0a0a; --accent: #ff0000; --police: #1a2a6c; }
-        body { background-color: var(--dark); color: #ddd; font-family: 'Consolas', monospace; margin: 0; padding: 20px; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
-        .main-wrapper { display: flex; gap: 20px; max-width: 1600px; margin: auto; flex: 1; min-height: 0; }
+        :root { --police: #1a2a6c; --success: #27ae60; --warning: #f39c12; --danger: #e74c3c; --bg: #f4f7f6; }
+        body { background-color: #0a0e14; color: #d1d1d1; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; height: 100vh; overflow: hidden; box-sizing: border-box; }
+        .main-wrapper { display: flex; gap: 20px; max-width: 1500px; margin: auto; height: calc(100vh - 40px); }
         
-        #chat-section { flex: 1; background: #111; border: 1px solid #333; display: flex; flex-direction: column; border-radius: 4px; }
-        #messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #000; }
-        .status-header { background: #222; padding: 10px; color: #fff; font-size: 0.8em; text-align: center; border-bottom: 2px solid var(--accent); }
+        /* Chat Sectie */
+        #chat-section { flex: 1; min-width: 380px; background: #1c222d; border: 2px solid var(--police); display: flex; flex-direction: column; border-radius: 8px; overflow: hidden; }
+        #messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: var(--bg); }
+        .status-header { background: var(--police); padding: 10px; color: white; display: flex; justify-content: space-between; font-size: 0.8em; font-weight: bold; letter-spacing: 1px; }
         
-        #aangifte-section { flex: 1.5; background: #fff; padding: 25px; color: #111; overflow-y: auto; border-radius: 4px; display: flex; flex-direction: column; }
+        /* Aangifte Sectie */
+        #aangifte-section { flex: 1.5; min-width: 500px; background: #ffffff; border: 2px solid #bdc3c7; display: flex; flex-direction: column; padding: 20px; border-radius: 8px; color: #333; overflow-y: auto; }
         
-        .bubble { max-width: 85%; padding: 12px; font-size: 0.9em; line-height: 1.4; border-radius: 2px; }
-        .bot { align-self: flex-start; background: #1a1a1a; color: #00ff00; border-left: 4px solid var(--accent); }
-        .user-msg { align-self: flex-end; background: var(--police); color: white; }
+        /* Bubbles */
+        .bubble { max-width: 85%; padding: 12px; border-radius: 15px; font-size: 0.9em; line-height: 1.4; }
+        .bot { align-self: flex-start; background: #e8e8e8; color: #2c3e50; border-bottom-left-radius: 2px; border-left: 4px solid var(--danger); }
+        .user-msg { align-self: flex-end; background: var(--police); color: white; border-bottom-right-radius: 2px; }
         
-        textarea { width: 100%; min-height: 250px; border: 2px solid #333; padding: 15px; font-family: 'Courier New', monospace; font-size: 1em; margin-bottom: 15px; box-sizing: border-box; }
+        /* Input & UI */
+        textarea { width: 100%; min-height: 220px; border: 2px solid var(--police); padding: 15px; border-radius: 4px; resize: none; font-size: 1em; margin-bottom: 10px; font-family: inherit; }
+        input[type="text"] { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
         
-        .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; background: #f0f0f0; padding: 15px; border-radius: 4px; }
-        .check-item { display: flex; align-items: center; gap: 8px; font-size: 0.7em; font-weight: bold; color: #333; }
+        #check-section { margin-top: 10px; padding: 15px; background: #f9f9f9; border-radius: 8px; border-left: 5px solid var(--police); }
+        .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .check-item { display: flex; align-items: center; gap: 10px; font-size: 0.8em; font-weight: bold; color: #555; }
         .status-dot { width: 10px; height: 10px; border-radius: 50%; background: #ccc; }
-        .dot-green { background: #27ae60; box-shadow: 0 0 5px #27ae60; }
-        .dot-red { background: #e74c3c; }
+        .dot-green { background: var(--success); box-shadow: 0 0 5px var(--success); }
+        .dot-red { background: var(--danger); }
 
-        button { padding: 15px; cursor: pointer; border: none; font-weight: bold; text-transform: uppercase; }
-        .btn-submit { background: var(--police); color: white; width: 100%; font-size: 1.1em; }
-        .btn-submit:hover { background: #000; }
+        button { background: var(--police); color: white; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px; transition: 0.2s; }
+        button:hover { opacity: 0.9; }
+        .btn-submit { background: var(--success); width: 100%; margin-top: 10px; font-size: 1.1em; }
         
-        #archive-section { margin-top: 30px; border-top: 3px solid var(--police); padding-top: 20px; }
-        .archive-item { background: #f9f9f9; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-left: 5px solid var(--police); font-family: 'Arial', sans-serif; color: #333; }
+        #archive-container { margin-top: 20px; border-top: 2px solid #eee; padding-top: 15px; }
+        .feed-item { background: #f9f9f9; border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 6px; color: #333; font-size: 0.9em; }
+        
+        @media print { .no-print { display: none !important; } }
     </style>
 </head>
 <body>
 
 <div class="main-wrapper">
     <div id="chat-section">
-        <div class="status-header">SYSTEEM: VERHOOR SAMIR (22J) - MISHANDELING</div>
-        <div id="messages">
-            <div class="bubble bot"><b>SAMIR:</b> Faka. Die gast moet hangen man. Hij pakt me gewoon vol bij die garage. Wat wil je weten?</div>
+        <div class="status-header">
+            <span>VERHOOR: SAMIR EL IDRISSI</span>
+            <span>STATUS: MEIWERKEND</span>
         </div>
-        <div style="padding:15px; background:#111; display:flex; gap:10px;">
-            <input type="text" id="botInput" style="flex:1; padding:12px; background:#000; border:1px solid #333; color:#0f0;" placeholder="Stel je vraag..." onkeypress="if(event.key==='Enter') chat()">
-            <button onclick="chat()" style="background:#333; color:white;">VRAAG</button>
+        <div id="messages">
+            <div class="bubble bot"><b>Samir:</b> Faka man. Ik ben hier voor die aangifte. Die gast heeft me echt vies gepakt bij die garage. Wat wil je weten?</div>
+        </div>
+        <div style="padding:15px; background:white; display:flex; gap:10px; border-top:1px solid #eee;">
+            <input type="text" id="botInput" placeholder="Stel een vraag..." onkeypress="if(event.key==='Enter') chat()">
+            <button onclick="chat()">VRAAG</button>
         </div>
     </div>
 
     <div id="aangifte-section">
         <div id="pdf-content">
-            <h2 style="margin:0; text-align: center; text-decoration: underline;">PROCES-VERBAAL VAN AANGIFTE</h2>
-            <p style="text-align: center; font-size: 0.8em;">Nummer: PL0900-2024-SAMIR</p>
+            <h2 style="color:var(--police); margin:0 0 10px 0;">Proces-Verbaal van Aangifte</h2>
+            <p style="font-size: 0.8em; color: #666; margin-bottom: 15px;">Betreft: Mishandeling (Art. 300 Sr)</p>
             
-            <textarea id="pvInput" placeholder="Stel hier de aangifte op. Gebruik de onvoltooid verleden tijd..." oninput="checkPV()"></textarea>
+            <textarea id="pvInput" placeholder="Schrijf hier de officiële aangifte in de ik-vorm en onvoltooid verleden tijd..." oninput="checkPV()"></textarea>
             
-            <div class="check-grid no-print">
-                <div class="check-item"><div id="c1" class="status-dot"></div>Mishandeling</div>
-                <div class="check-item"><div id="c2" class="status-dot"></div>Opzettelijk</div>
-                <div class="check-item"><div id="c3" class="status-dot"></div>Pijn of letsel</div>
-                <div class="check-item"><div id="c4" class="status-dot"></div>Gouden W's</div>
-                <div class="check-item"><div id="c5" class="status-dot"></div>Wederkerigheid</div>
-                <div class="check-item"><div id="c6" class="status-dot"></div>Wetenschap</div>
-                <div class="check-item"><div id="c7" class="status-dot"></div>Actieve OVT</div>
-                <div class="check-item"><div id="c8" class="status-dot"></div>Decorstukken</div>
+            <div id="check-section" class="no-print">
+                <b style="font-size: 0.9em; color: var(--police); display: block; margin-bottom: 10px;">Bestanddelen & Eisen:</b>
+                <div class="check-grid">
+                    <div class="check-item"><div id="c1" class="status-dot"></div><span>Mishandeling</span></div>
+                    <div class="check-item"><div id="c2" class="status-dot"></div><span>Opzettelijk</span></div>
+                    <div class="check-item"><div id="c3" class="status-dot"></div><span>Pijn of letsel</span></div>
+                    <div class="check-item"><div id="c4" class="status-dot"></div><span>Locatie en tijd</span></div>
+                    <div class="check-item"><div id="c5" class="status-dot"></div><span>Wederkerigheid</span></div>
+                    <div class="check-item"><div id="c6" class="status-dot"></div><span>Redenen van wetenschap</span></div>
+                    <div class="check-item"><div id="c7" class="status-dot"></div><span>Actieve OVT</span></div>
+                    <div class="check-item"><div id="c8" class="status-dot"></div><span>Omgevingselementen</span></div>
+                </div>
+            </div>
+
+            <div id="archive-container">
+                <h3 style="color: var(--police); font-size: 1em;">Openbaar Archief</h3>
+                <div id="feed-container"></div>
             </div>
         </div>
-        
-        <button class="btn-submit no-print" onclick="submitPV()">INLEVEREN & PUBLICEREN</button>
-        
-        <div id="archive-section">
-            <h3 style="margin-top:0;">OPENBAAR ARCHIEF (INGELEVERD WERK)</h3>
-            <div id="feed-container"></div>
-        </div>
+
+        <button class="btn-submit no-print" onclick="submitPV()">AANGIFTE INLEVEREN</button>
     </div>
 </div>
 
@@ -94,12 +109,13 @@
         plek: ["Voor de ingang van de Springweg garage, Stadhuisplein 4.", "Op het Stadhuisplein 4, bij die parkeergarage.", "Dat was bij de ingang van de Springweg garage op nummer 4.", "Stadhuisplein 4 in Utrecht, daar bij die ingang."],
         hoe: ["Die lijper geeft me een dichte vuist op m'n kaak.", "Ineens krijg ik een vuistslag op m'n bakkes.", "Hij haalt uit en raakt me vol met z'n vuist op m'n kaak.", "Die gast sloeg me gewoon met z'n vuist."],
         terug: ["Ik gaf hem direct een klap terug op z'n neus.", "Ik sloeg hem ook een keer, bam op z'n gok.", "Ik liet me niet doen en gaf een tik terug op z'n neus.", "Uit reflex gaf ik die gozer een klap terug op z'n neus."],
-        dader: ["Hij is breed, kaal met zo'n overloop kapsel.", "Grote gast, geschoren hoofd, echt een overloopje.", "Hij was echt een boom man, kaal geschoren zijkanten.", "Die dader was groot en had een overloop kapsel."],
+        welkehand: ["Geen idee man, die klap kwam zo snel dat ik die hand niet zag.", "Zou het niet weten bro, het ging te fast om te zien of het links of rechts was.", "Poeh, dat ging zo vlug onder die lampen, ik zag niet welke hand hij gebruikte.", "Geen flauw idee met welke hand hij me pakte, ik zag alleen die vuist komen."],
+        dader: ["Hij is breed, kaal met zo'n overloop kapsel.", "Grote gast, geschoren hoofd, echt een overloopje aan de zijkant.", "Hij was echt een boom man, kaal geschoren zijkanten.", "Die dader was groot en had een overloop kapsel."],
         kleding: ["Zwarte North Face jas en witte Jordans.", "Hij rockte een North Face en witte Jordans.", "Zijn jas was van North Face, zwart, met witte patta's.", "Hij droeg witte Jordans en een zwarte North Face."],
         litteken: ["Hij heeft een litteken bij z'n linkerwenkbrauw.", "Er zat een litteken boven zijn linker oog.", "Ik zag een litteken bij z'n wenkbrauw aan de linkerkant.", "Die gast heeft een litteken links bij z'n oog."],
-        omgeving: ["Er lag een omgevallen fatbike en glas van een flesje.", "Ik zag een fatbike op de grond en kapot glas.", "Op de grond lag een bierflesje en een fatbike op z'n kant.", "Overal lag glas en er stond een fatbike schuin op de grond."],
+        omgeving: ["Er lag een omgevallen fatbike en glas van een bierflesje.", "Ik zag een fatbike op de grond en kapot glas.", "Op de grond lag een bierflesje en een fatbike op z'n kant.", "Overal lag glas en er stond een fatbike schuin op de grond."],
         schade: ["M'n Daily Paper shirt is helemaal kapot.", "Check m'n Daily Paper shirt, gescheurd man.", "Dat dure Daily Paper shirt van me is naar de haaien.", "M'n shirt van Daily Paper is helemaal doormidden gescheurd."],
-        onbekend: ["Ewa, ik snap je vraag niet.", "Vraag normale dingen over die diefstal ofzo.", "Ik weet niet wat je bedoelt."]
+        onbekend: ["Ewa, ik snap je vraag niet.", "Vraag normale dingen man.", "Ik weet niet wat je bedoelt."]
     };
 
     function chat() {
@@ -117,15 +133,16 @@
 
             let cat = "onbekend";
             if (v.includes("wie") || v.includes("naam")) cat = "wie";
-            else if (v.includes("wanneer") || v.includes("tijd") || v.includes("hoe laat")) cat = "tijd";
+            else if (v.includes("wanneer") || v.includes("tijd")) cat = "tijd";
             else if (v.includes("waar") || v.includes("adres") || v.includes("plek")) cat = "plek";
-            else if (v.includes("hoe") || v.includes("gebeurd") || v.includes("klap") || v.includes("vuist")) cat = "hoe";
+            else if (v.includes("hoe") || v.includes("gebeurd") || v.includes("klap")) cat = "hoe";
+            else if (v.includes("welke hand") || v.includes("links") || v.includes("rechts")) cat = "welkehand";
             else if (v.includes("terug") || v.includes("geslagen")) cat = "terug";
             else if (v.includes("dader") || v.includes("eruit")) cat = "dader";
-            else if (v.includes("kleding") || v.includes("jas") || v.includes("jordans")) cat = "kleding";
+            else if (v.includes("jas") || v.includes("kleding") || v.includes("jordans")) cat = "kleding";
             else if (v.includes("litteken")) cat = "litteken";
-            else if (v.includes("omgeving") || v.includes("fatbike") || v.includes("glas")) cat = "omgeving";
-            else if (v.includes("schade") || v.includes("shirt")) cat = "schade";
+            else if (v.includes("fatbike") || v.includes("glas") || v.includes("omgeving")) cat = "omgeving";
+            else if (v.includes("shirt") || v.includes("schade") || v.includes("daily paper")) cat = "schade";
 
             let options = responses[cat].filter(r => !usedResponses.includes(r));
             if (options.length === 0) { options = responses[cat]; usedResponses = usedResponses.filter(r => !responses[cat].includes(r)); }
@@ -140,7 +157,7 @@
     function addBubble(t, s) {
         const d = document.createElement('div');
         d.className = `bubble ${s}`;
-        d.innerHTML = s === 'bot' ? `<b>SAMIR:</b> ${t}` : t;
+        d.innerHTML = s === 'bot' ? `<b>Samir:</b> ${t}` : t;
         const m = document.getElementById('messages');
         m.appendChild(d);
         m.scrollTop = m.scrollHeight;
@@ -152,24 +169,24 @@
         
         update("c1", t.includes("mishandeling") || t.includes("mishandeld"));
         update("c2", t.includes("opzettelijk"));
-        update("c3", t.includes("pijn") || t.includes("letsel"));
+        update("c3", t.includes("pijn") || t.includes("letsel") || t.includes("kaak"));
         update("c4", t.includes("stadhuisplein") && t.includes("04:30"));
         update("c5", t.includes("klap terug") || t.includes("sloeg ik hem"));
         update("c6", /ik\s+(verklaar|zag|hoorde|merkte)/i.test(t));
-        update("c7", /\b(sloeg|zag|hoorde|stond|kwam|gaf|raakte)\b/i.test(t));
+        update("c7", /\b(sloeg|zag|hoorde|stond|kwam|gaf|raakte|verklaarde)\b/i.test(t));
         update("c8", t.includes("fatbike") || t.includes("glas"));
     }
 
     function submitPV() {
         const txt = document.getElementById('pvInput').value.trim();
-        if(!txt) { alert("Je tekstvak is leeg!"); return; }
-        db.ref('samir_public_archief').push({ tekst: txt, timestamp: new Date().toLocaleString() });
+        if(!txt) return;
+        db.ref('samir_werk_archief').push({ tekst: txt, timestamp: new Date().toLocaleString() });
         document.getElementById('pvInput').value = '';
         checkPV();
-        alert("PV succesvol ingeleverd en gepubliceerd!");
+        alert("Aangifte succesvol ingeleverd!");
     }
 
-    db.ref('samir_public_archief').on('value', (s) => {
+    db.ref('samir_werk_archief').on('value', (s) => {
         const container = document.getElementById('feed-container');
         container.innerHTML = "";
         const data = s.val();
@@ -177,8 +194,8 @@
             Object.keys(data).reverse().forEach(k => {
                 const i = data[k];
                 const div = document.createElement('div');
-                div.className = 'archive-item';
-                div.innerHTML = `<small>${i.timestamp}</small><p>${i.tekst}</p>`;
+                div.className = 'feed-item';
+                div.innerHTML = `<small style="color:var(--police); font-weight:bold;">${i.timestamp}</small><br><br>${i.tekst}`;
                 container.appendChild(div);
             });
         }
