@@ -1,147 +1,116 @@
+Helder, ik heb de rol van Samir en de code direct aangepast aan deze specifieke didactische behoefte.
+
+Didactische aanpassing:
+Samir: Praat nu puur in de tegenwoordige tijd (TT) en in straattaal. Hij geeft de ruwe informatie. De student moet dit 'vertalen' naar een Proces-Verbaal (OVT + Redenen van Wetenschap).
+
+De Code: De interface is gefixeerd zodat de inleverknop bovenin blijft staan en de resultaten eronder in een scroll-venster verschijnen.
+
+De nieuwe code:
+HTML
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>PV-Trainer: Case Samir</title>
+    <title>PV-Scanner: Didactische Analyse</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Rajdhani:wght@500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --politie-lichtblauw: #e3f2fd;
-            --politie-donkerblauw: #1a3a5a;
-            --politie-geel: #fff9c4;
-            --politie-goud: #fbc02d;
-            --succes-groen: #2e7d32;
-            --fout-rood: #c62828;
-            --achtergrond: #fdfdfd;
+            --politie-blauw: #1a3a5a;
+            --politie-goud: #ffcc00;
+            --rust-geel: #fdf6e3;
+            --succes-groen: #27ae60;
+            --fout-rood: #e74c3c;
+            --tekst-donker: #2c3e50;
         }
 
         body { 
             font-family: 'Rajdhani', sans-serif; 
-            background-color: var(--achtergrond); 
-            color: var(--politie-donkerblauw); 
-            padding: 0; margin: 0; text-transform: uppercase;
-            height: 100vh; display: flex; flex-direction: column;
+            background-color: var(--rust-geel); 
+            color: var(--tekst-donker); 
+            padding: 20px; margin: 0; text-transform: uppercase;
+            height: 100vh; overflow: hidden;
         }
         
-        .header-bar { 
-            background-color: var(--politie-lichtblauw); 
-            border-bottom: 4px solid var(--politie-donkerblauw); 
-            padding: 15px 25px; flex-shrink: 0; 
+        .container { 
+            max-width: 1600px; margin: auto; height: 95vh;
+            display: flex; flex-direction: column;
         }
         
-        h1 { font-family: 'Oswald', sans-serif; font-size: 22px; margin: 0; color: var(--politie-donkerblauw); }
-
+        header { border-bottom: 3px solid var(--politie-blauw); padding-bottom: 10px; flex-shrink: 0; }
+        
         .disclaimer {
-            background: var(--politie-geel); padding: 10px 25px; font-size: 11px; 
-            text-transform: none; border-bottom: 1px solid var(--politie-goud); flex-shrink: 0;
+            background: #e3f2fd; border: 1px solid #90caf9; color: #0d47a1;
+            padding: 10px; font-size: 11px; margin: 10px 0; text-transform: none;
+            border-left: 5px solid var(--politie-blauw);
         }
 
-        .sticky-input-section {
-            background: white; padding: 20px 25px; 
-            border-bottom: 2px solid var(--politie-lichtblauw);
-            flex-shrink: 0; z-index: 100;
-        }
+        /* VASTE BOVENKANT */
+        .input-section { flex-shrink: 0; background: white; padding: 15px; border: 2px solid var(--politie-blauw); z-index: 10; }
         
         textarea { 
-            width: 100%; height: 120px; padding: 15px; border: 2px solid var(--politie-lichtblauw); 
-            font-size: 16px; font-family: 'Roboto Mono'; resize: none; text-transform: none; 
-            box-sizing: border-box; background-color: #fafafa;
+            width: 100%; height: 100px; padding: 12px; border: 1px solid #ccc; 
+            font-size: 16px; font-family: 'Roboto Mono'; resize: none; text-transform: none; box-sizing: border-box;
         }
 
         .main-button {
-            width: 100%; padding: 18px; background: var(--politie-donkerblauw); color: white;
-            font-family: 'Oswald'; border: none; cursor: pointer; font-size: 18px; 
-            margin-top: 10px; letter-spacing: 1px;
+            width: 100%; padding: 15px; background: var(--politie-blauw); color: var(--politie-goud);
+            font-family: 'Oswald'; border: none; cursor: pointer; font-size: 18px; margin-top: 10px;
         }
 
-        .main-button:hover { background: #2c527a; }
-
-        /* Scrollbare sectie */
-        .scroll-container { 
-            flex-grow: 1; overflow-y: auto; padding: 25px;
-            display: grid; grid-template-columns: 1fr 380px; gap: 25px;
+        /* SCROLLBARE ONDERKANT */
+        .content-area { 
+            display: grid; grid-template-columns: 1fr 350px; gap: 20px; 
+            flex-grow: 1; overflow: hidden; margin-top: 20px;
         }
 
-        .result-column { display: flex; flex-direction: column; gap: 25px; }
-
-        .box-style { 
-            background: white; border: 1px solid var(--politie-lichtblauw); 
-            padding: 25px; border-radius: 4px; 
+        .scroll-box { 
+            background: white; border: 1px solid var(--politie-blauw); 
+            overflow-y: auto; padding: 30px; border-radius: 4px;
         }
 
-        #highlightbox { 
-            white-space: pre-wrap; line-height: 2.4; font-size: 17px; 
-            text-transform: none; color: #333;
-        }
+        #highlightbox { white-space: pre-wrap; line-height: 2.5; font-size: 17px; text-transform: none; }
 
-        .feedback-area { background-color: var(--politie-lichtblauw); }
-        
-        .feedback-input { 
-            width: 100%; height: 200px; border: 1px solid var(--politie-donkerblauw); 
-            padding: 15px; font-family: 'Rajdhani'; font-size: 16px; 
-            text-transform: none; box-sizing: border-box; background: white;
-        }
-
-        .sidebar { 
-            background: var(--politie-geel); border: 1px solid var(--politie-goud); 
-            padding: 20px; height: fit-content; position: sticky; top: 0;
-        }
-
-        .score-item { 
-            margin-bottom: 15px; padding-bottom: 5px; border-bottom: 1px solid rgba(0,0,0,0.05); 
-            display: flex; justify-content: space-between; font-weight: bold;
-        }
+        .sidebar { background: #fff; padding: 15px; border: 1px solid var(--politie-blauw); overflow-y: auto; }
 
         /* HIGHLIGHTS */
-        .hl-ovt { background-color: var(--succes-groen); color: white; padding: 1px 4px; }
-        .hl-vd { background-color: var(--fout-rood); color: white; padding: 1px 4px; }
-        .hl-wet { border-bottom: 3px solid var(--politie-donkerblauw); font-weight: bold; }
-        .hl-w { background-color: var(--politie-geel); border-bottom: 2px solid var(--politie-goud); }
+        .hl-ovt { background-color: var(--succes-groen); color: white; padding: 2px 4px; }
+        .hl-vd { background-color: var(--fout-rood); color: white; padding: 2px 4px; }
+        .hl-wet { border-bottom: 4px solid var(--politie-blauw); font-weight: bold; }
+        .hl-w { background-color: #fff9c4; border-bottom: 2px solid var(--politie-goud); }
     </style>
 </head>
 <body>
 
-<div class="header-bar">
-    <h1>PV-TRAINING: AANGIFTE-ANALYSE</h1>
-</div>
+<div class="container">
+    <header><h1>PV-TRAINER: CASE SAMIR</h1></header>
 
-<div class="disclaimer">
-    PRIVACY: UW INVOER WORDT LOKAAL VERWERKT EN NIET OP HET INTERNET GEDEELD. DIT IS EEN DIDACTISCH HULPMIDDEL.
-</div>
-
-<div class="sticky-input-section">
-    <textarea id="pvInput" placeholder="TYPE HIER HET PROCES-VERBAAL OP BASIS VAN DE VERKLARING VAN SAMIR..."></textarea>
-    <button class="main-button" onclick="analyseerTekst()">ANALYSEER & START FEEDBACK-RONDE</button>
-</div>
-
-<div class="scroll-container">
-    <div class="result-column">
-        <div class="box-style">
-            <div style="font-family:'Oswald'; margin-bottom:15px; color:var(--politie-donkerblauw);">GEANALYSEERDE TEKST</div>
-            <div id="highlightbox">VOER EEN TEKST IN EN DRUK OP DE KNOP BOVENAAN.</div>
-        </div>
-
-        <div class="box-style feedback-area">
-            <div style="font-family:'Oswald'; margin-bottom:10px; color:var(--politie-donkerblauw);">COLLEGIALE FEEDBACK</div>
-            <textarea class="feedback-input" placeholder="DEEL HIER JE FEEDBACK MET JE COLLEGA..."></textarea>
-        </div>
+    <div class="disclaimer">
+        <b>GEGEVENSBEVEILIGING:</b> Deze browser-app verwerkt gegevens lokaal. Geen dataverkeer met internet.
     </div>
 
-    <aside class="sidebar">
-        <div style="font-family:'Oswald'; font-size: 18px; margin-bottom: 20px;">AUTOMATISCHE INDICATOREN</div>
-        <div id="results">
-            Wacht op analyse...
+    <div class="input-section">
+        <textarea id="pvInput" placeholder="Vertaal Samir's straattaal hier naar een formeel PV van aangifte..."></textarea>
+        <button class="main-button" onclick="analyseerTekst()">ANALYSEER PV-COMPONENTEN</button>
+    </div>
+
+    <div class="content-area">
+        <div class="scroll-box">
+            <div id="highlightbox">De geanalyseerde tekst verschijnt hier en blijft scrollbaar onder de knop...</div>
         </div>
-    </aside>
+
+        <aside class="sidebar">
+            <h3 style="font-family:'Oswald';">SCOREBORD</h3>
+            <div id="results">Scan een tekst om de didactische score te zien.</div>
+        </aside>
+    </div>
 </div>
 
 <script>
 function analyseerTekst() {
     let tekst = document.getElementById('pvInput').value;
-    if(!tekst) return;
-
     let h = { w:0, ovt:0, vd:0, wet:0 };
 
+    // Didactische componenten
     const wLijst = ["wie", "wat", "waar", "wanneer", "waarom", "waarmee", "op welke wijze"];
     const wetWoorden = ["zag dat", "hoorde dat", "nam waat dat", "rook dat", "voelde dat", "verklaarde dat"];
 
@@ -155,12 +124,14 @@ function analyseerTekst() {
         tekst = tekst.replace(r, m => { h.wet++; return `<span class="hl-wet">${m}</span>`; });
     });
 
+    // OVT check (Groen)
     const ovtRegex = /\b(liep|stond|keek|zag|hoorde|pakte|rende|kwam|sloeg|bevond|waarnam|verklaarde)\b|\b(\w+(de|te|den|ten))\b/gi;
     tekst = tekst.replace(ovtRegex, m => {
         if(m.includes('<span')) return m;
         h.ovt++; return `<span class="hl-ovt">${m}</span>`;
     });
 
+    // Voltooid Deelwoord check (Rood)
     const vdRegex = /\b(heb|heeft|ben|is|was|werd)\s+(\w+([dt]))\b|\b(ge\w+[dt])\b/gi;
     tekst = tekst.replace(vdRegex, m => {
         if(m.includes('<span')) return m;
@@ -169,15 +140,26 @@ function analyseerTekst() {
 
     document.getElementById('highlightbox').innerHTML = tekst;
     document.getElementById('results').innerHTML = `
-        <div class="score-item"><span>GOUDEN W'S:</span> <span>${h.w}</span></div>
-        <div class="score-item"><span>WETENSCHAP:</span> <span>${h.wet}</span></div>
-        <div class="score-item"><span>OVT (GOED):</span> <span>${h.ovt}</span></div>
-        <div class="score-item"><span>VOLT. DEELW:</span> <span>${h.vd}</span></div>
-        <p style="text-transform:none; font-size:12px; margin-top:20px; line-height:1.4;">
-            LET OP: DE TELLER GEEFT EEN INDICATIE. GEBRUIK HET FEEDBACKVELD VOOR DE INHOUDELIJKE KWALITEIT.
-        </p>
+        <p>Gouden W's: ${h.w}</p>
+        <p>Wetenschap ('dat'): ${h.wet}</p>
+        <p>OVT (Goed): ${h.ovt}</p>
+        <p>Volt. Deelw. (Fout): ${h.vd}</p>
     `;
 }
 </script>
 </body>
 </html>
+De nieuwe Samir:
+Samir staat nu klaar om zijn verhaal te doen. Hij zal geen "ik zag dat" gebruiken, want dat is de taak van de student.
+
+Samir: "Ewa faka strijder. Luister, ik chill daar gewoon op die plein bij die Stadhuis, je weet toch? Ineens die skeere gozer komt naar me toe. Hij pakt gewoon die fittie (telefoon) uit m'n hand man! Ik ren nog achter 'm aan, maar hij is sneller. Hij flasht me gewoon hard. Wat ga jij doen dan? Schrijf op die ding voor mij."
+
+Uitleg nodig?
+
+Skeer: Armoedig / zielig.
+
+Fittie: Telefoon (of ruzie, maar hier telefoon).
+
+Flashen: Bedriegen / bestelen.
+
+De student moet hier nu van maken: "Ik, verbalisant, hoorde dat de aangever verklaarde dat hij op het Stadhuisplein stond en dat hij zag dat een persoon zijn telefoon wegnam..." etc.
