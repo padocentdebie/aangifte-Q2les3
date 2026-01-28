@@ -38,46 +38,72 @@
 
         .main-layout { display: grid; grid-template-columns: 450px 1fr; flex-grow: 1; overflow: hidden; }
 
-        /* LINKS: CHAT RUIMTE SAMIR */
+        /* LINKS: INTERACTIEVE CHAT SAMIR */
         .chat-kolom {
             background-color: var(--politie-lichtblauw);
             border-right: 3px solid var(--politie-donkerblauw);
-            padding: 20px;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+        }
+
+        #chatWindow {
+            flex-grow: 1;
+            padding: 20px;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
         .chat-bubble {
             background: var(--wit);
             border: 2px solid var(--politie-donkerblauw);
-            padding: 20px;
-            margin-bottom: 15px;
+            padding: 12px;
             border-radius: 15px 15px 15px 0;
-            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+            max-width: 85%;
         }
 
-        .samir-naam { font-family: 'Oswald'; font-size: 14px; color: var(--politie-donkerblauw); margin-bottom: 5px; }
-        .samir-tekst { text-transform: none; font-weight: 600; color: #111; font-size: 17px; line-height: 1.5; }
+        .user-bubble {
+            background: var(--politie-donkerblauw);
+            color: white;
+            align-self: flex-end;
+            border-radius: 15px 15px 0 15px;
+            text-transform: none;
+        }
+
+        .samir-naam { font-family: 'Oswald'; font-size: 11px; margin-bottom: 3px; opacity: 0.8; }
+        .samir-tekst { text-transform: none; font-weight: 600; font-size: 15px; line-height: 1.4; }
+
+        .chat-input-area {
+            padding: 15px;
+            background: var(--wit);
+            border-top: 2px solid var(--politie-donkerblauw);
+            display: flex;
+            gap: 10px;
+        }
+
+        #samirVraag {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-transform: none;
+            font-family: 'Rajdhani';
+        }
 
         /* RECHTS: WERKZONE */
         .werk-kolom { display: flex; flex-direction: column; overflow-y: auto; padding: 30px; gap: 25px; }
-
         .blok { background: var(--wit); border: 1px solid #cfd8dc; padding: 25px; border-radius: 2px; }
         .titel-blok { font-family: 'Oswald'; margin-bottom: 15px; color: var(--politie-donkerblauw); font-size: 18px; border-bottom: 2px solid var(--politie-lichtblauw); padding-bottom: 8px; }
-
         textarea { width: 100%; height: 140px; padding: 15px; border: 2px solid #e0e0e0; font-size: 16px; font-family: 'Roboto Mono'; resize: none; text-transform: none; box-sizing: border-box; }
-
         .inlever-button { width: 100%; padding: 15px; background: var(--politie-donkerblauw); color: white; font-family: 'Oswald'; border: none; cursor: pointer; font-size: 18px; }
-
-        #highlightbox { white-space: pre-wrap; line-height: 2.3; font-size: 17px; text-transform: none; color: #222; min-height: 80px; padding: 15px; background: #fff; border: 1px inset #eee; }
+        #highlightbox { white-space: pre-wrap; line-height: 2.3; font-size: 17px; text-transform: none; color: #222; min-height: 80px; padding: 15px; }
 
         .score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
         .score-unit { background: #f8f9fa; padding: 10px; text-align: center; border: 1px solid #eee; }
         .score-val { font-family: 'Oswald'; font-size: 22px; display: block; }
-        .score-label { font-size: 10px; font-weight: bold; }
-
-        /* ANALYSE KLEUREN */
+        
         .hl-ovt { background-color: var(--succes-groen); color: white; padding: 2px 4px; }
         .hl-vd { background-color: var(--fout-rood); color: white; padding: 2px 4px; }
         .hl-wet { border-bottom: 3px solid var(--politie-donkerblauw); font-weight: bold; }
@@ -87,56 +113,81 @@
 <body>
 
 <header><h1>Q2 LES 3 PV AANGIFTE</h1></header>
-<div class="disclaimer">PRIVACY: DEZE APP DRAAIT LOKAAL. GEEN DATA WORDT VERZONDEN NAAR HET INTERNET.</div>
+<div class="disclaimer">PRIVACY: UW CHAT EN PV WORDEN NIET OPGESLAGEN OF VERZONDEN.</div>
 
 <div class="main-layout">
-    <aside class="chat-kolom" id="chatWindow">
-        <div class="chat-bubble">
-            <div class="samir-naam">SAMIR</div>
-            <div class="samir-tekst">"Ewa faka strijder! Ik kom aangifte doen man. Die actie op het Stadhuisplein was echt niet lauw."</div>
+    <aside class="chat-kolom">
+        <div id="chatWindow">
+            <div class="chat-bubble">
+                <div class="samir-naam">SAMIR</div>
+                <div class="samir-tekst">"Ewa faka strijder! Ik kom aangifte doen man. Die actie gister was echt niet lauw. Vraag me wat er is gebeurd dan?"</div>
+            </div>
         </div>
-        <div class="chat-bubble">
-            <div class="samir-naam">SAMIR</div>
-            <div class="samir-tekst">"Gisteren rond een uur of drie chill ik daar met m'n fittie. Ineens komt zo'n skeere dader naar me toe. Hij heeft een bivakmuts op en een mes in z'n hand, je weet toch?"</div>
-        </div>
-        <div class="chat-bubble">
-            <div class="samir-naam">SAMIR</div>
-            <div class="samir-tekst">"Hij pakt die fittie gewoon uit m'n hand en rent weg richting dat steegje bij de Febo. Ik schreeuw nog maar hij is al gevlogen. Flasht me gewoon hard. Schrijf op voor me!"</div>
+        <div class="chat-input-area">
+            <input type="text" id="samirVraag" placeholder="Stel Samir een vraag (bijv. waar?)...">
+            <button onclick="stuurVraag()" style="background:var(--politie-goud); border:none; padding:10px; cursor:pointer; font-weight:bold;">SPOUT</button>
         </div>
     </aside>
 
     <main class="werk-kolom">
         <section class="blok">
             <div class="titel-blok">1. FORMALISEER DE AANGIFTE</div>
-            <textarea id="pvInput" placeholder="Vertaal Samir's chat hierboven naar een formeel PV..."></textarea>
+            <textarea id="pvInput" placeholder="Vertaal de verzamelde informatie naar een formeel PV..."></textarea>
             <button class="inlever-button" onclick="analyseerTekst()">ANALYSEER & LEVER IN</button>
         </section>
 
         <section class="blok">
-            <div class="titel-blok">2. ANALYSE-RESULTAAT</div>
+            <div class="titel-blok">2. INGELEVERDE TEKST & ANALYSE</div>
             <div id="highlightbox">Ingeleverde tekst verschijnt hier...</div>
             <div class="score-grid">
-                <div class="score-unit"><span class="score-val" id="s-w">0</span><span class="score-label">GOUDEN W'S</span></div>
-                <div class="score-unit"><span class="score-val" id="s-wet">0</span><span class="score-label">WETENSCHAP</span></div>
-                <div class="score-unit"><span class="score-val" id="s-ovt">0</span><span class="score-label">OVT (GOED)</span></div>
-                <div class="score-unit"><span class="score-val" id="s-vd">0</span><span class="score-label">VOLT. DEELW.</span></div>
+                <div class="score-unit"><span class="score-val" id="s-w">0</span>GOUDEN W'S</div>
+                <div class="score-unit"><span class="score-val" id="s-wet">0</span>WETENSCHAP</div>
+                <div class="score-unit"><span class="score-val" id="s-ovt">0</span>OVT</div>
+                <div class="score-unit"><span class="score-val" id="s-vd">0</span>VOLT. DW.</div>
             </div>
         </section>
 
         <section class="blok">
-            <div class="titel-blok">3. COLLEGIALE FEEDBACK</div>
-            <textarea style="height: 80px; border: 2px dashed var(--politie-goud); background: #fffde7;" placeholder="Typ hier feedback voor je collega..."></textarea>
+            <div class="titel-blok">3. FEEDBACK VOOR COLLEGA</div>
+            <textarea style="height: 80px; border: 2px dashed var(--politie-goud); background: #fffde7; padding:10px; width:100%; box-sizing:border-box; text-transform:none;" placeholder="Typ hier feedback..."></textarea>
         </section>
     </main>
 </div>
 
 <script>
+let fase = 0;
+const samirAntwoorden = [
+    "Het was op dat Stadhuisplein man, bij die bankjes.",
+    "Rond een uur of drie 's middags was het. Ik chillde daar gewoon.",
+    "Zo'n skeere gozer kwam naar me toe. Hij had een bivakmuts op.",
+    "Hij pakt gewoon m'n fittie (telefoon) uit m'n hand man!",
+    "Hij had een mes in z'n hand, daarom deed ik niks.",
+    "Hij rende weg richting die steeg bij de Febo. Ik ben 'm kwijt."
+];
+
+function stuurVraag() {
+    let vraag = document.getElementById('samirVraag').value;
+    if(!vraag) return;
+    
+    let chat = document.getElementById('chatWindow');
+    chat.innerHTML += `<div class="chat-bubble user-bubble"><div class="samir-tekst">${vraag}</div></div>`;
+    
+    setTimeout(() => {
+        let antwoord = fase < samirAntwoorden.length ? samirAntwoorden[fase] : "Ik heb je alles verteld man, schrijf dat PV nu maar!";
+        chat.innerHTML += `<div class="chat-bubble"><div class="samir-naam">SAMIR</div><div class="samir-tekst">${antwoord}</div></div>`;
+        fase++;
+        chat.scrollTop = chat.scrollHeight;
+    }, 600);
+    
+    document.getElementById('samirVraag').value = "";
+}
+
 function analyseerTekst() {
     let tekst = document.getElementById('pvInput').value;
     if(!tekst) return;
     let h = { w:0, ovt:0, vd:0, wet:0 };
-    const wLijst = ["wie", "wat", "waar", "wanneer", "waarom", "waarmee", "op welke wijze", "welke wijze"];
-    const wetWoorden = ["zag dat", "hoorde dat", "nam waat dat", "rook dat", "voelde dat", "verklaarde dat", "waarnam dat"];
+    const wLijst = ["wie", "wat", "waar", "wanneer", "waarom", "waarmee", "hoe"];
+    const wetWoorden = ["zag dat", "hoorde dat", "nam waat dat", "verklaarde dat"];
 
     wLijst.forEach(w => {
         let r = new RegExp('\\b'+w+'\\b', 'gi');
@@ -146,9 +197,9 @@ function analyseerTekst() {
         let r = new RegExp(w, 'gi');
         tekst = tekst.replace(r, m => { h.wet++; return `<span class="hl-wet">${m}</span>`; });
     });
-    const ovtRegex = /\b(liep|stond|keek|zag|hoorde|pakte|rende|kwam|sloeg|bevond|waarnam|verklaarde|vroeg|vond|vroegen|stonden|liepen|hoorden)\b|\b(\w+(de|te|den|ten))\b/gi;
+    const ovtRegex = /\b(liep|stond|keek|zag|hoorde|pakte|rende|kwam|sloeg|bevond|waarnam|verklaarde)\b|\b(\w+(de|te|den|ten))\b/gi;
     tekst = tekst.replace(ovtRegex, m => { if(m.includes('<span')) return m; h.ovt++; return `<span class="hl-ovt">${m}</span>`; });
-    const vdRegex = /\b(heb|heeft|ben|is|was|werd|wordt|worden|hebben|zijn|waren|werden)\s+(\w+([dt]))\b|\b(ge\w+[dt])\b/gi;
+    const vdRegex = /\b(heb|heeft|ben|is|was|werd|wordt)\s+(\w+([dt]))\b|\b(ge\w+[dt])\b/gi;
     tekst = tekst.replace(vdRegex, m => { if(m.includes('<span')) return m; h.vd++; return `<span class="hl-vd">${m}</span>`; });
 
     document.getElementById('highlightbox').innerHTML = tekst;
@@ -156,7 +207,6 @@ function analyseerTekst() {
     document.getElementById('s-wet').innerText = h.wet;
     document.getElementById('s-ovt').innerText = h.ovt;
     document.getElementById('s-vd').innerText = h.vd;
-    document.querySelector('.werk-kolom').scrollTo({ top: 300, behavior: 'smooth' });
 }
 </script>
 </body>
