@@ -45,7 +45,6 @@
             overflow: hidden;
         }
 
-        /* LINKER KOLOM: SAMIR (DE BRON) */
         .samir-kolom {
             background-color: var(--politie-lichtblauw);
             border-right: 3px solid var(--politie-donkerblauw);
@@ -67,7 +66,6 @@
             text-transform: none; font-weight: 600; color: #111; font-size: 19px; line-height: 1.6; font-style: italic;
         }
 
-        /* RECHTER KOLOM: WERKZONE (SCROLLBAAR) */
         .werk-kolom {
             display: flex;
             flex-direction: column;
@@ -81,7 +79,6 @@
             border: 1px solid #cfd8dc;
             padding: 30px;
             border-radius: 2px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .titel-blok { 
@@ -99,16 +96,10 @@
             box-sizing: border-box; margin-bottom: 15px; background: #fdfdfd;
         }
 
-        textarea:focus { border-color: var(--politie-donkerblauw); outline: none; }
-
-        .button-row { display: flex; gap: 10px; }
-
         .inlever-button {
-            flex-grow: 1; padding: 18px; background: var(--politie-donkerblauw); color: white;
+            width: 100%; padding: 18px; background: var(--politie-donkerblauw); color: white;
             font-family: 'Oswald'; border: none; cursor: pointer; font-size: 18px; letter-spacing: 1px;
         }
-
-        .inlever-button:hover { background: #264b73; }
 
         #highlightbox { 
             white-space: pre-wrap; line-height: 2.5; font-size: 18px; 
@@ -122,13 +113,11 @@
             background-color: #fffde7; font-size: 16px;
         }
 
-        /* SCORE INDICATOREN */
         .score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 20px; }
         .score-unit { background: #f8f9fa; border: 1px solid #eee; padding: 15px; text-align: center; }
         .score-val { font-family: 'Oswald'; font-size: 26px; display: block; color: var(--politie-donkerblauw); }
         .score-label { font-size: 12px; font-weight: bold; color: #666; }
 
-        /* ANALYSE KLEUREN */
         .hl-ovt { background-color: var(--succes-groen); color: white; padding: 2px 5px; border-radius: 3px; }
         .hl-vd { background-color: var(--fout-rood); color: white; padding: 2px 5px; border-radius: 3px; }
         .hl-wet { border-bottom: 4px solid var(--politie-donkerblauw); font-weight: bold; }
@@ -163,45 +152,27 @@
     </aside>
 
     <main class="werk-kolom">
-        
         <section class="blok">
             <div class="titel-blok">1. FORMALISEER DE AANGIFTE</div>
             <textarea id="pvInput" placeholder="Vertaal Samir's verhaal hier naar een formeel PV..."></textarea>
-            <div class="button-row">
-                <button class="inlever-button" onclick="analyseerTekst()">ANALYSEER & LEVER IN</button>
-            </div>
+            <button class="inlever-button" onclick="analyseerTekst()">ANALYSEER & LEVER IN</button>
         </section>
 
         <section class="blok">
             <div class="titel-blok">2. ANALYSE-RESULTAAT</div>
             <div id="highlightbox">De geanalyseerde tekst verschijnt hier na het inleveren...</div>
-            
             <div class="score-grid">
-                <div class="score-unit">
-                    <span class="score-val" id="s-w">0</span>
-                    <span class="score-label">GOUDEN W'S</span>
-                </div>
-                <div class="score-unit">
-                    <span class="score-val" id="s-wet">0</span>
-                    <span class="score-label">WETENSCHAP</span>
-                </div>
-                <div class="score-unit">
-                    <span class="score-val" id="s-ovt">0</span>
-                    <span class="score-label">OVT (GOED)</span>
-                </div>
-                <div class="score-unit">
-                    <span class="score-val" id="s-vd">0</span>
-                    <span class="score-label">VOLT. DEELW.</span>
-                </div>
+                <div class="score-unit"><span class="score-val" id="s-w">0</span><span class="score-label">GOUDEN W'S</span></div>
+                <div class="score-unit"><span class="score-val" id="s-wet">0</span><span class="score-label">WETENSCHAP</span></div>
+                <div class="score-unit"><span class="score-val" id="s-ovt">0</span><span class="score-label">OVT (GOED)</span></div>
+                <div class="score-unit"><span class="score-val" id="s-vd">0</span><span class="score-label">VOLT. DEELW.</span></div>
             </div>
         </section>
 
         <section class="blok">
             <div class="titel-blok">3. COLLEGIALE FEEDBACK</div>
-            <p style="text-transform:none; font-size: 14px; margin-bottom: 12px; color: #444;">Beoordeel de juridische kwaliteit en volledigheid van je collega:</p>
             <textarea class="feedback-veld" placeholder="Schrijf hier je feedback..."></textarea>
         </section>
-
     </main>
 </div>
 
@@ -209,44 +180,28 @@
 function analyseerTekst() {
     let tekst = document.getElementById('pvInput').value;
     if(!tekst) return;
-
     let h = { w:0, ovt:0, vd:0, wet:0 };
-    
-    // De componenten
     const wLijst = ["wie", "wat", "waar", "wanneer", "waarom", "waarmee", "op welke wijze"];
     const wetWoorden = ["zag dat", "hoorde dat", "nam waat dat", "rook dat", "voelde dat", "verklaarde dat", "waarnam dat"];
 
-    // Highlights uitvoeren
     wLijst.forEach(w => {
         let r = new RegExp('\\b'+w+'\\b', 'gi');
         tekst = tekst.replace(r, m => { h.w++; return `<span class="hl-w">${m}</span>`; });
     });
-
     wetWoorden.forEach(w => {
         let r = new RegExp(w, 'gi');
         tekst = tekst.replace(r, m => { h.wet++; return `<span class="hl-wet">${m}</span>`; });
     });
-
     const ovtRegex = /\b(liep|stond|keek|zag|hoorde|pakte|rende|kwam|sloeg|bevond|waarnam|verklaarde|vroeg|vond|vroegen|stonden|liepen|hoorden)\b|\b(\w+(de|te|den|ten))\b/gi;
-    tekst = tekst.replace(ovtRegex, m => {
-        if(m.includes('<span')) return m;
-        h.ovt++; return `<span class="hl-ovt">${m}</span>`;
-    });
-
+    tekst = tekst.replace(ovtRegex, m => { if(m.includes('<span')) return m; h.ovt++; return `<span class="hl-ovt">${m}</span>`; });
     const vdRegex = /\b(heb|heeft|ben|is|was|werd|wordt|worden|hebben|zijn|waren|werden)\s+(\w+([dt]))\b|\b(ge\w+[dt])\b/gi;
-    tekst = tekst.replace(vdRegex, m => {
-        if(m.includes('<span')) return m;
-        h.vd++; return `<span class="hl-vd">${m}</span>`;
-    });
+    tekst = tekst.replace(vdRegex, m => { if(m.includes('<span')) return m; h.vd++; return `<span class="hl-vd">${m}</span>`; });
 
-    // Resultaten tonen
     document.getElementById('highlightbox').innerHTML = tekst;
     document.getElementById('s-w').innerText = h.w;
     document.getElementById('s-wet').innerText = h.wet;
     document.getElementById('s-ovt').innerText = h.ovt;
     document.getElementById('s-vd').innerText = h.vd;
-    
-    // Automatisch naar resultaat scrollen
     document.querySelector('.werk-kolom').scrollTo({ top: 450, behavior: 'smooth' });
 }
 </script>
