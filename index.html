@@ -25,8 +25,7 @@
         
         header { 
             background-color: var(--politie-donkerblauw); 
-            color: white;
-            border-bottom: 4px solid var(--politie-goud); 
+            color: white; border-bottom: 4px solid var(--politie-goud); 
             padding: 15px 25px; flex-shrink: 0;
         }
         
@@ -35,132 +34,87 @@
         .disclaimer {
             background: var(--politie-geel); padding: 8px 25px; font-size: 11px; 
             text-transform: none; border-bottom: 1px solid #e6db74; flex-shrink: 0;
-            color: #555;
         }
 
-        .main-layout {
-            display: grid;
-            grid-template-columns: 420px 1fr;
-            flex-grow: 1;
-            overflow: hidden;
-        }
+        .main-layout { display: grid; grid-template-columns: 450px 1fr; flex-grow: 1; overflow: hidden; }
 
-        .samir-kolom {
+        /* LINKS: CHAT RUIMTE SAMIR */
+        .chat-kolom {
             background-color: var(--politie-lichtblauw);
             border-right: 3px solid var(--politie-donkerblauw);
-            padding: 30px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
             overflow-y: auto;
         }
 
-        .samir-box {
+        .chat-bubble {
             background: var(--wit);
             border: 2px solid var(--politie-donkerblauw);
-            padding: 25px;
-            box-shadow: 5px 5px 0px var(--politie-goud);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 15px 15px 15px 0;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
         }
 
-        .samir-tekst {
-            text-transform: none; font-weight: 600; color: #111; font-size: 19px; line-height: 1.6; font-style: italic;
-        }
+        .samir-naam { font-family: 'Oswald'; font-size: 14px; color: var(--politie-donkerblauw); margin-bottom: 5px; }
+        .samir-tekst { text-transform: none; font-weight: 600; color: #111; font-size: 17px; line-height: 1.5; }
 
-        .werk-kolom {
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-            padding: 30px 50px;
-            gap: 30px;
-        }
+        /* RECHTS: WERKZONE */
+        .werk-kolom { display: flex; flex-direction: column; overflow-y: auto; padding: 30px; gap: 25px; }
 
-        .blok {
-            background: var(--wit);
-            border: 1px solid #cfd8dc;
-            padding: 30px;
-            border-radius: 2px;
-        }
+        .blok { background: var(--wit); border: 1px solid #cfd8dc; padding: 25px; border-radius: 2px; }
+        .titel-blok { font-family: 'Oswald'; margin-bottom: 15px; color: var(--politie-donkerblauw); font-size: 18px; border-bottom: 2px solid var(--politie-lichtblauw); padding-bottom: 8px; }
 
-        .titel-blok { 
-            font-family: 'Oswald'; 
-            margin-bottom: 20px; 
-            color: var(--politie-donkerblauw); 
-            font-size: 20px;
-            border-bottom: 2px solid var(--politie-lichtblauw);
-            padding-bottom: 10px;
-        }
+        textarea { width: 100%; height: 140px; padding: 15px; border: 2px solid #e0e0e0; font-size: 16px; font-family: 'Roboto Mono'; resize: none; text-transform: none; box-sizing: border-box; }
 
-        textarea { 
-            width: 100%; height: 160px; padding: 15px; border: 2px solid #e0e0e0; 
-            font-size: 17px; font-family: 'Roboto Mono'; resize: none; text-transform: none; 
-            box-sizing: border-box; margin-bottom: 15px; background: #fdfdfd;
-        }
+        .inlever-button { width: 100%; padding: 15px; background: var(--politie-donkerblauw); color: white; font-family: 'Oswald'; border: none; cursor: pointer; font-size: 18px; }
 
-        .inlever-button {
-            width: 100%; padding: 18px; background: var(--politie-donkerblauw); color: white;
-            font-family: 'Oswald'; border: none; cursor: pointer; font-size: 18px; letter-spacing: 1px;
-        }
+        #highlightbox { white-space: pre-wrap; line-height: 2.3; font-size: 17px; text-transform: none; color: #222; min-height: 80px; padding: 15px; background: #fff; border: 1px inset #eee; }
 
-        #highlightbox { 
-            white-space: pre-wrap; line-height: 2.5; font-size: 18px; 
-            text-transform: none; color: #222; min-height: 100px; padding: 20px; 
-            background: #fff; border: 1px inset #eee;
-        }
+        .score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
+        .score-unit { background: #f8f9fa; padding: 10px; text-align: center; border: 1px solid #eee; }
+        .score-val { font-family: 'Oswald'; font-size: 22px; display: block; }
+        .score-label { font-size: 10px; font-weight: bold; }
 
-        .feedback-veld {
-            width: 100%; height: 120px; border: 2px dashed var(--politie-goud);
-            padding: 15px; font-family: 'Rajdhani'; text-transform: none; box-sizing: border-box;
-            background-color: #fffde7; font-size: 16px;
-        }
-
-        .score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 20px; }
-        .score-unit { background: #f8f9fa; border: 1px solid #eee; padding: 15px; text-align: center; }
-        .score-val { font-family: 'Oswald'; font-size: 26px; display: block; color: var(--politie-donkerblauw); }
-        .score-label { font-size: 12px; font-weight: bold; color: #666; }
-
-        .hl-ovt { background-color: var(--succes-groen); color: white; padding: 2px 5px; border-radius: 3px; }
-        .hl-vd { background-color: var(--fout-rood); color: white; padding: 2px 5px; border-radius: 3px; }
-        .hl-wet { border-bottom: 4px solid var(--politie-donkerblauw); font-weight: bold; }
-        .hl-w { background-color: var(--politie-geel); border-bottom: 3px solid var(--politie-goud); font-weight: bold; }
+        /* ANALYSE KLEUREN */
+        .hl-ovt { background-color: var(--succes-groen); color: white; padding: 2px 4px; }
+        .hl-vd { background-color: var(--fout-rood); color: white; padding: 2px 4px; }
+        .hl-wet { border-bottom: 3px solid var(--politie-donkerblauw); font-weight: bold; }
+        .hl-w { background-color: var(--politie-geel); border-bottom: 2px solid var(--politie-goud); font-weight: bold; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Q2 LES 3 PV AANGIFTE</h1>
-</header>
-
-<div class="disclaimer">
-    PRIVACY-CHECK: DEZE APP DRAAIT VOLLEDIG LOKAAL. UW INGEVOERDE TEKSTEN WORDEN NIET VERZONDEN NAAR HET INTERNET OF OPGESLAGEN OP EEN SERVER.
-</div>
+<header><h1>Q2 LES 3 PV AANGIFTE</h1></header>
+<div class="disclaimer">PRIVACY: DEZE APP DRAAIT LOKAAL. GEEN DATA WORDT VERZONDEN NAAR HET INTERNET.</div>
 
 <div class="main-layout">
-    <aside class="samir-kolom">
-        <div class="samir-box">
-            <div class="titel-blok" style="border-color: var(--politie-goud);">BRON: SAMIR</div>
-            <div class="samir-tekst">
-                "Faka strijder! Goed dat je die pen pakt. Luister, ik chillde op die Stadhuisplein, je weet zelf. Komt die skeere dader naar me toe, pakt m'n fittie uit m'n hand en rent weg. Hij flasht me gewoon hard op die plek. Schrijf die ding goed op voor die officier!"
-            </div>
+    <aside class="chat-kolom" id="chatWindow">
+        <div class="chat-bubble">
+            <div class="samir-naam">SAMIR</div>
+            <div class="samir-tekst">"Ewa faka strijder! Ik kom aangifte doen man. Die actie op het Stadhuisplein was echt niet lauw."</div>
         </div>
-        
-        <div style="background: var(--wit); padding: 15px; border: 1px solid var(--politie-donkerblauw); text-transform: none; font-size: 13px;">
-            <b>WOORDENLIJST SAMIR:</b><br>
-            • <i>Fittie</i> = Mobiele telefoon<br>
-            • <i>Skeer</i> = Armoedig / Verpauperd<br>
-            • <i>Flashen</i> = Bestelen / Oplichten
+        <div class="chat-bubble">
+            <div class="samir-naam">SAMIR</div>
+            <div class="samir-tekst">"Gisteren rond een uur of drie chill ik daar met m'n fittie. Ineens komt zo'n skeere dader naar me toe. Hij heeft een bivakmuts op en een mes in z'n hand, je weet toch?"</div>
+        </div>
+        <div class="chat-bubble">
+            <div class="samir-naam">SAMIR</div>
+            <div class="samir-tekst">"Hij pakt die fittie gewoon uit m'n hand en rent weg richting dat steegje bij de Febo. Ik schreeuw nog maar hij is al gevlogen. Flasht me gewoon hard. Schrijf op voor me!"</div>
         </div>
     </aside>
 
     <main class="werk-kolom">
         <section class="blok">
             <div class="titel-blok">1. FORMALISEER DE AANGIFTE</div>
-            <textarea id="pvInput" placeholder="Vertaal Samir's verhaal hier naar een formeel PV..."></textarea>
+            <textarea id="pvInput" placeholder="Vertaal Samir's chat hierboven naar een formeel PV..."></textarea>
             <button class="inlever-button" onclick="analyseerTekst()">ANALYSEER & LEVER IN</button>
         </section>
 
         <section class="blok">
             <div class="titel-blok">2. ANALYSE-RESULTAAT</div>
-            <div id="highlightbox">De geanalyseerde tekst verschijnt hier na het inleveren...</div>
+            <div id="highlightbox">Ingeleverde tekst verschijnt hier...</div>
             <div class="score-grid">
                 <div class="score-unit"><span class="score-val" id="s-w">0</span><span class="score-label">GOUDEN W'S</span></div>
                 <div class="score-unit"><span class="score-val" id="s-wet">0</span><span class="score-label">WETENSCHAP</span></div>
@@ -171,7 +125,7 @@
 
         <section class="blok">
             <div class="titel-blok">3. COLLEGIALE FEEDBACK</div>
-            <textarea class="feedback-veld" placeholder="Schrijf hier je feedback..."></textarea>
+            <textarea style="height: 80px; border: 2px dashed var(--politie-goud); background: #fffde7;" placeholder="Typ hier feedback voor je collega..."></textarea>
         </section>
     </main>
 </div>
@@ -181,7 +135,7 @@ function analyseerTekst() {
     let tekst = document.getElementById('pvInput').value;
     if(!tekst) return;
     let h = { w:0, ovt:0, vd:0, wet:0 };
-    const wLijst = ["wie", "wat", "waar", "wanneer", "waarom", "waarmee", "op welke wijze"];
+    const wLijst = ["wie", "wat", "waar", "wanneer", "waarom", "waarmee", "op welke wijze", "welke wijze"];
     const wetWoorden = ["zag dat", "hoorde dat", "nam waat dat", "rook dat", "voelde dat", "verklaarde dat", "waarnam dat"];
 
     wLijst.forEach(w => {
@@ -202,7 +156,7 @@ function analyseerTekst() {
     document.getElementById('s-wet').innerText = h.wet;
     document.getElementById('s-ovt').innerText = h.ovt;
     document.getElementById('s-vd').innerText = h.vd;
-    document.querySelector('.werk-kolom').scrollTo({ top: 450, behavior: 'smooth' });
+    document.querySelector('.werk-kolom').scrollTo({ top: 300, behavior: 'smooth' });
 }
 </script>
 </body>
