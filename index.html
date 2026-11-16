@@ -407,20 +407,20 @@
         #addBtn { background: #003082; }
         #clearBtn { background: #d32f2f; }
 
-        /* ================= SCHERM 3: ZINSONTLEDEN (25 ZINNEN) ================= */
+        /* ================= SCHERM 3: ZINSONTLEDEN (25 ZINNEN - VERGROOT LETTERTYPE) ================= */
         #screen-ontleden {
             background: #f4f7f9;
             overflow-y: auto;
-            padding: 18px 24px;
+            padding: 20px 26px;
         }
 
         .ontleden-wrapper {
-            max-width: 1120px;
+            max-width: 1280px;
             width: 100%;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
         }
 
         .ontleden-header {
@@ -428,7 +428,7 @@
             border: 1px solid #cbd5e1;
             border-left: 6px solid var(--politie-donkerblauw);
             border-radius: 10px;
-            padding: 14px 20px;
+            padding: 16px 22px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -436,39 +436,51 @@
             gap: 12px;
         }
 
+        .ontleden-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 26px;
+        }
+
+        .ontleden-subtitle {
+            font-size: 18px;
+            color: #475569;
+            font-weight: 600;
+        }
+
         .ontleden-stats {
             display: flex;
-            gap: 14px;
+            gap: 12px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .ontleden-pill {
             background: var(--politie-lichtblauw);
             border: 1px solid #90caf9;
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 18px;
         }
 
         .sentence-nav-dots {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 7px;
             background: var(--wit);
-            padding: 10px 14px;
+            padding: 12px 16px;
             border-radius: 10px;
             border: 1px solid #cbd5e1;
         }
 
         .dot-btn {
-            width: 34px;
-            height: 30px;
+            width: 40px;
+            height: 36px;
             border-radius: 6px;
             border: 1.5px solid #cbd5e1;
             background: #f8fafc;
             font-family: 'Oswald', sans-serif;
-            font-size: 13px;
+            font-size: 16px;
             cursor: pointer;
             color: var(--politie-donkerblauw);
         }
@@ -495,35 +507,36 @@
             background: var(--wit);
             border: 1px solid #cbd5e1;
             border-radius: 12px;
-            padding: 24px;
+            padding: 26px;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
         }
 
         .sentence-instruction {
-            font-size: 15px;
-            color: #475569;
-            margin-bottom: 16px;
+            font-size: 19px;
+            color: #334155;
+            margin-bottom: 18px;
             font-weight: 600;
+            line-height: 1.45;
         }
 
         .sentence-tokens {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 4px 2px;
-            line-height: 2.2;
-            padding: 18px;
+            gap: 8px 3px;
+            line-height: 2.3;
+            padding: 22px;
             background: #f8fafc;
             border: 2px solid #e2e8f0;
             border-radius: 10px;
-            min-height: 92px;
+            min-height: 110px;
         }
 
         .token-word {
-            font-size: 21px;
+            font-size: 28px;
             font-weight: 700;
             color: #0f172a;
-            padding: 2px 5px;
+            padding: 3px 6px;
             border-radius: 5px;
         }
 
@@ -531,18 +544,18 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 20px;
-            height: 38px;
+            width: 26px;
+            height: 48px;
             border: 1.5px dashed #cbd5e1;
             background: #ffffff;
             color: #94a3b8;
             font-family: 'Roboto Mono', monospace;
-            font-size: 22px;
+            font-size: 28px;
             font-weight: 700;
             border-radius: 6px;
             cursor: pointer;
             transition: 0.14s;
-            margin: 0 1px;
+            margin: 0 2px;
             padding: 0;
         }
 
@@ -584,17 +597,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 18px;
-            gap: 10px;
+            margin-top: 20px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
         .btn-action {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
             border-radius: 8px;
             font-family: 'Oswald', sans-serif;
-            font-size: 16px;
+            font-size: 19px;
             letter-spacing: 0.7px;
             cursor: pointer;
         }
@@ -604,56 +617,107 @@
         .btn-nav { background: var(--politie-goud); color: var(--politie-navy); font-weight: 700; }
 
         .ontleden-feedback {
-            margin-top: 16px;
-            padding: 14px 18px;
+            margin-top: 18px;
+            padding: 18px 22px;
             border-radius: 10px;
+            font-size: 19px;
+            line-height: 1.5;
             display: none;
         }
 
         .ontleden-feedback.show { display: block; }
-        .ontleden-feedback.ok { background: #ecfdf5; border: 1.5px solid #10b981; }
-        .ontleden-feedback.err { background: #fef2f2; border: 1.5px solid #ef4444; }
+        .ontleden-feedback.ok { background: #ecfdf5; border: 2px solid #10b981; }
+        .ontleden-feedback.err { background: #fef2f2; border: 2px solid #ef4444; }
+        .ontleden-feedback.warn { background: #fffbeb; border: 2px solid #f59e0b; color: #92400e; }
+
+        .ontleden-hints {
+            margin: 10px 0 0 0;
+            padding-left: 24px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #7f1d1d;
+        }
+
+        .ontleden-hints li {
+            margin-bottom: 4px;
+        }
 
         .chunks-breakdown {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
+            gap: 10px;
+            margin-top: 12px;
         }
 
         .chunk-chip {
             background: white;
             border: 1.5px solid #cbd5e1;
             border-radius: 8px;
-            padding: 6px 10px;
-            font-size: 14px;
+            padding: 8px 13px;
+            font-size: 18px;
         }
 
         .chunk-role {
             display: block;
             font-family: 'Oswald', sans-serif;
-            font-size: 11px;
+            font-size: 14px;
             color: var(--politie-donkerblauw);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        /* ================= SCHERM 4: SAMIR PV AANGIFTE & LIVEFEED ================= */
+        .ontleden-overview {
+            background: var(--wit);
+            border: 2px solid #16a34a;
+            border-radius: 12px;
+            padding: 22px 24px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+            display: none;
+        }
+
+        .ontleden-overview.show {
+            display: block;
+        }
+
+        .overview-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 24px;
+            color: #166534;
+            margin: 0 0 14px 0;
+        }
+
+        .overview-item {
+            padding: 14px 0;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .overview-item:first-of-type {
+            border-top: none;
+        }
+
+        .overview-item-head {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        /* ================= SCHERM 4: SAMIR PV AANGIFTE & LIVEFEED (VERGROOT LETTERTYPE) ================= */
         #screen-samir {
             background: #f4f7f9;
         }
 
         .samir-layout {
             display: grid;
-            grid-template-columns: 390px 1fr 390px;
+            grid-template-columns: minmax(320px, 410px) minmax(380px, 1fr) minmax(320px, 410px);
             flex: 1;
             min-height: 0;
             overflow: hidden;
         }
 
-        @media (max-width: 1150px) {
+        @media (max-width: 1100px) {
             .samir-layout {
-                grid-template-columns: 320px 1fr 300px;
+                grid-template-columns: 1fr;
+                overflow-y: auto;
             }
         }
 
@@ -663,34 +727,35 @@
             display: flex;
             flex-direction: column;
             min-height: 0;
+            min-width: 0;
         }
 
         .col-header {
             background: var(--politie-donkerblauw);
             color: var(--politie-goud);
             font-family: 'Oswald', sans-serif;
-            font-size: 14px;
+            font-size: 18px;
             letter-spacing: 0.8px;
-            padding: 8px 14px;
+            padding: 10px 16px;
             flex-shrink: 0;
         }
 
         #chatWindow {
             flex: 1;
-            padding: 14px;
+            padding: 16px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .chat-bubble {
             background: var(--wit);
             border: 1px solid var(--politie-donkerblauw);
-            padding: 10px 12px;
+            padding: 12px 15px;
             border-radius: 12px 12px 12px 0;
             box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.05);
-            max-width: 90%;
+            max-width: 92%;
         }
 
         .user-bubble {
@@ -702,24 +767,24 @@
 
         .samir-naam {
             font-family: 'Oswald', sans-serif;
-            font-size: 11px;
-            margin-bottom: 2px;
-            opacity: 0.75;
+            font-size: 14px;
+            margin-bottom: 3px;
+            opacity: 0.8;
             text-transform: uppercase;
         }
 
         .samir-tekst {
             font-weight: 600;
-            font-size: 14.5px;
-            line-height: 1.38;
+            font-size: 18px;
+            line-height: 1.45;
         }
 
         .quick-prompts {
-            padding: 6px 10px;
+            padding: 8px 12px;
             background: #dbeafe;
             border-top: 1px solid #93c5fd;
             display: flex;
-            gap: 5px;
+            gap: 6px;
             flex-wrap: wrap;
         }
 
@@ -728,8 +793,8 @@
             border: 1px solid var(--politie-donkerblauw);
             color: var(--politie-donkerblauw);
             border-radius: 999px;
-            padding: 3px 9px;
-            font-size: 11.5px;
+            padding: 5px 12px;
+            font-size: 14.5px;
             font-weight: 700;
             cursor: pointer;
             font-family: inherit;
@@ -740,7 +805,7 @@
         }
 
         .chat-input-area {
-            padding: 10px;
+            padding: 12px;
             background: var(--wit);
             border-top: 2px solid var(--politie-donkerblauw);
             display: flex;
@@ -749,75 +814,105 @@
 
         #samirVraag {
             flex: 1;
-            padding: 8px 10px;
+            padding: 10px 12px;
             border: 1.5px solid #cbd5e1;
             border-radius: 6px;
             font-family: inherit;
-            font-size: 15px;
+            font-size: 18px;
             font-weight: 600;
+            min-width: 0;
+        }
+
+        #samirStuurBtn {
+            background: var(--politie-goud);
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Oswald', sans-serif;
+            font-size: 17px;
         }
 
         .werk-kolom {
             display: flex;
             flex-direction: column;
             overflow-y: auto;
-            padding: 16px;
-            gap: 14px;
+            padding: 18px;
+            gap: 16px;
             min-height: 0;
+            min-width: 0;
         }
 
         .blok {
             background: var(--wit);
             border: 1px solid #cfd8dc;
-            padding: 16px;
+            padding: 18px;
             border-radius: 8px;
         }
 
         .titel-blok {
             font-family: 'Oswald', sans-serif;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             color: var(--politie-donkerblauw);
-            font-size: 16px;
+            font-size: 20px;
             border-bottom: 2px solid var(--politie-lichtblauw);
-            padding-bottom: 5px;
+            padding-bottom: 6px;
         }
 
         textarea#pvInput {
             width: 100%;
-            height: 135px;
-            padding: 12px;
+            height: 175px;
+            padding: 14px;
             border: 2px solid #cbd5e1;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 18px;
+            line-height: 1.55;
             font-family: 'Roboto Mono', monospace;
             resize: vertical;
         }
 
         .inlever-button {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background: var(--politie-donkerblauw);
             color: white;
             font-family: 'Oswald', sans-serif;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 17px;
-            margin-top: 8px;
+            font-size: 20px;
+            margin-top: 10px;
             letter-spacing: 1px;
         }
 
-        .inlever-button:hover {
+        .inlever-button:hover:not(:disabled) {
             background: #122940;
         }
 
+        .inlever-button:disabled {
+            opacity: 0.7;
+            cursor: wait;
+        }
+
+        .pv-save-status {
+            margin-top: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            min-height: 22px;
+        }
+
+        .pv-save-status.ok { color: var(--succes-groen); }
+        .pv-save-status.err { color: var(--fout-rood); }
+
         #highlightbox {
             white-space: pre-wrap;
-            line-height: 2.0;
-            font-size: 14.5px;
+            overflow-wrap: anywhere;
+            line-height: 2.05;
+            font-size: 18.5px;
             color: #475569;
-            min-height: 75px;
-            padding: 10px;
+            min-height: 90px;
+            padding: 14px;
             border: 1px solid #e2e8f0;
             border-radius: 6px;
             background: #f8fafc;
@@ -826,23 +921,23 @@
         .score-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 6px;
-            margin-top: 10px;
+            gap: 8px;
+            margin-top: 12px;
         }
 
         .score-unit {
             background: #f8f9fa;
-            padding: 6px 4px;
+            padding: 8px 6px;
             text-align: center;
             border: 1px solid #e2e8f0;
             border-radius: 6px;
-            font-size: 10px;
+            font-size: 12.5px;
             font-weight: 700;
         }
 
         .score-val {
             font-family: 'Oswald', sans-serif;
-            font-size: 19px;
+            font-size: 24px;
             display: block;
             color: var(--politie-donkerblauw);
         }
@@ -860,15 +955,16 @@
             display: flex;
             flex-direction: column;
             min-height: 0;
+            min-width: 0;
         }
 
         #livefeedList {
             flex: 1;
             overflow-y: auto;
-            padding: 12px;
+            padding: 14px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .feed-card {
@@ -876,7 +972,7 @@
             border: 1px solid #cbd5e1;
             border-left: 4px solid var(--politie-donkerblauw);
             border-radius: 8px;
-            padding: 10px 12px;
+            padding: 12px 14px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
 
@@ -884,8 +980,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
-            font-size: 12px;
+            margin-bottom: 8px;
+            font-size: 15px;
             font-weight: 700;
             color: #475569;
         }
@@ -893,31 +989,31 @@
         .feed-author {
             color: var(--politie-donkerblauw);
             font-family: 'Oswald', sans-serif;
-            font-size: 14px;
+            font-size: 18px;
         }
 
         .feed-text {
-            font-size: 13.5px;
-            line-height: 1.5;
+            font-size: 17px;
+            line-height: 1.55;
             color: #1e293b;
             white-space: pre-wrap;
-            word-break: break-word;
-            margin-bottom: 8px;
+            overflow-wrap: anywhere;
+            margin-bottom: 10px;
         }
 
         .feed-badges {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
+            gap: 6px;
         }
 
         .feed-badge {
-            font-size: 10.5px;
+            font-size: 13px;
             font-weight: 700;
             background: #f1f5f9;
             border: 1px solid #cbd5e1;
             border-radius: 4px;
-            padding: 2px 6px;
+            padding: 3px 8px;
         }
 
         /* ================= SCHERM 5: WOORDENSCHAT SNAKE + SCOREBOARD ================= */
@@ -1290,11 +1386,12 @@
             <div class="ontleden-wrapper">
                 <div class="ontleden-header">
                     <div>
-                        <strong style="font-family:'Oswald'; font-size:20px;">ZINSONTLEDEN — 25 POLITIEZINNEN</strong><br>
-                        <span style="font-size:14px; color:#475569;">Elke zin bevat een persoonsvorm, onderwerp, gezegde, lijdend voorwerp, meewerkend voorwerp en bijwoordelijke bepaling.</span>
+                        <strong class="ontleden-title">ZINSONTLEDEN — 25 POLITIEZINNEN</strong><br>
+                        <span class="ontleden-subtitle">Elke zin bevat een persoonsvorm, onderwerp, gezegde, lijdend voorwerp, meewerkend voorwerp en bijwoordelijke bepaling.</span>
                     </div>
                     <div class="ontleden-stats">
                         <div class="ontleden-pill" id="ontledenCounter">Zin 1 / 25</div>
+                        <div class="ontleden-pill" id="ontledenCheckedCount" style="background:#fef9c3; border-color:#fde047;">Gecontroleerd: 0 / 25</div>
                         <div class="ontleden-pill" id="ontledenScore" style="background:#dcfce7; border-color:#86efac;">Score: 0 / 25</div>
                     </div>
                 </div>
@@ -1303,17 +1400,17 @@
 
                 <div class="sentence-card">
                     <div class="sentence-instruction">
-                        Klik op de verticale streepjes (<strong>|</strong>) tussen de woorden om de <strong>zinsdelen</strong> te scheiden. Let op: een hele woordgroep kan één zinsdeel zijn!
+                        Klik op de verticale streepjes (<strong>|</strong>) tussen de woorden om de <strong>zinsdelen</strong> te scheiden. De correcte verdeling van de zinsdelen verschijnt pas nadat alle 25 zinnen zijn gecontroleerd.
                     </div>
 
                     <div class="sentence-tokens" id="sentenceTokens"></div>
 
                     <div class="ontleden-actions">
-                        <div style="display:flex; gap:8px;">
-                            <button class="btn-action btn-check" id="checkOntledenBtn">✔ CONTROLEER ZIN</button>
+                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                            <button class="btn-action btn-check" id="checkOntledenBtn">✔ CONTROLEER DE ZIN</button>
                             <button class="btn-action btn-reset" id="resetOntledenBtn">↺ WIS STREEPJES</button>
                         </div>
-                        <div style="display:flex; gap:8px;">
+                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
                             <button class="btn-action btn-nav" id="prevSentenceBtn">◀ VORIGE</button>
                             <button class="btn-action btn-nav" id="nextSentenceBtn">VOLGENDE ▶</button>
                         </div>
@@ -1321,6 +1418,8 @@
 
                     <div class="ontleden-feedback" id="ontledenFeedback"></div>
                 </div>
+
+                <div class="ontleden-overview" id="ontledenAnswerOverview"></div>
             </div>
         </section>
 
@@ -1345,7 +1444,7 @@
                     </div>
                     <div class="chat-input-area">
                         <input type="text" id="samirVraag" placeholder="Stel een vraag aan Samir...">
-                        <button id="samirStuurBtn" style="background:var(--politie-goud); border:none; padding:8px 14px; border-radius:6px; cursor:pointer; font-weight:bold; font-family:'Oswald';">STUUR</button>
+                        <button id="samirStuurBtn">STUUR</button>
                     </div>
                 </aside>
 
@@ -1355,6 +1454,7 @@
                         <div class="titel-blok">1. MAAK HIER HET PROCES-VERBAAL OP</div>
                         <textarea id="pvInput" placeholder="Schrijf hier het proces-verbaal van aangifte (in de verleden tijd, met de 7 Gouden W's, redenen van wetenschap en delictsbestanddelen)..."></textarea>
                         <button class="inlever-button" id="inleverPvBtn">INLEVEREN &amp; PLAATS IN LIVEFEED</button>
+                        <div class="pv-save-status" id="pvSaveStatus"></div>
                     </section>
 
                     <section class="blok">
@@ -1373,11 +1473,11 @@
                 <!-- Rechter kolom: Realtime Livefeed -->
                 <aside class="livefeed-kolom">
                     <div class="col-header" style="display:flex; justify-content:space-between; align-items:center;">
-                        <span>📡 LIVEFEED KLAS <span id="livefeedClassLabel">-</span></span>
-                        <span style="font-size:11px; color:#86efac;">● REALTIME</span>
+                        <span>📡 LIVEFEED KLAS <span id="livefeedClassLabel">-</span> (<span id="livefeedCount">0</span>)</span>
+                        <span style="font-size:13px; color:#86efac;">● REALTIME</span>
                     </div>
                     <div id="livefeedList">
-                        <div style="color:#64748b; font-size:13px; text-align:center; padding:20px;">
+                        <div class="feed-empty" style="color:#64748b; font-size:16px; text-align:center; padding:20px;">
                             Nog geen aangiftes ingeleverd in deze klas...
                         </div>
                     </div>
@@ -1391,7 +1491,7 @@
                 <div class="stats-left">
                     <div class="stat-pill">
                         <span class="stat-label">Woorden</span>
-                        <span class="stat-value green" id="scoreVal">0 / 42</span>
+                        <span class="stat-value green" id="scoreVal">0 / 46</span>
                     </div>
                     <div class="stat-pill">
                         <span class="stat-label">Lengte</span>
@@ -1466,7 +1566,19 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, push, remove, update, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import {
+        getDatabase,
+        ref,
+        onValue,
+        onChildAdded,
+        onChildChanged,
+        onChildRemoved,
+        push,
+        remove,
+        update,
+        set,
+        serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyA3_rzoZOWytlyAbYKKe_WuFlD8z2WvbX4",
@@ -1496,8 +1608,15 @@
 
     // Firebase unsubscribe holders
     let unsubBoard = null;
-    let unsubFeed = null;
+    let unsubFeedAdd = null;
+    let unsubFeedChange = null;
+    let unsubFeedRemove = null;
     let unsubScores = null;
+
+    // Livefeed & scoreboard state
+    const renderedFeedIds = new Set();
+    let feedCount = 0;
+    let latestScoreboardPlayers = [];
 
     function escapeHtml(str) {
         return String(str)
@@ -1521,6 +1640,7 @@
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'nato-btn';
+        btn.dataset.cls = cls;
         btn.textContent = cls;
         btn.addEventListener('click', () => {
             selectedClassTemp = cls;
@@ -1541,6 +1661,22 @@
         return sid;
     }
 
+    function getPvDraftKey() {
+        return currentUser ? `q2_les3_pvdraft_${currentUser.natoClass}_${currentUser.id}` : 'q2_les3_pvdraft_anon';
+    }
+
+    function loadPvDraft() {
+        const pvEl = document.getElementById('pvInput');
+        const savedDraft = localStorage.getItem(getPvDraftKey());
+        if (savedDraft !== null) {
+            pvEl.value = savedDraft;
+        }
+    }
+
+    document.getElementById('pvInput').addEventListener('input', (e) => {
+        localStorage.setItem(getPvDraftKey(), e.target.value);
+    });
+
     function completeLogin(name, natoClass) {
         const sid = getOrCreateStudentId(name, natoClass);
         currentUser = { id: sid, name, natoClass };
@@ -1552,6 +1688,11 @@
         document.getElementById('sbClassLabel').textContent = natoClass.toUpperCase();
         document.getElementById('loginOverlay').classList.add('hidden');
 
+        natoGrid.querySelectorAll('.nato-btn').forEach(b => {
+            b.classList.toggle('selected', b.dataset.cls === natoClass);
+        });
+
+        loadPvDraft();
         connectClassFirebaseListeners();
         registerStudentInScoreboard();
     }
@@ -1594,34 +1735,92 @@
 
             if (target === 'screen-snake') {
                 fitCanvas();
+                renderScoreboard(latestScoreboardPlayers);
             } else if (target === 'screen-board') {
                 redrawDigibord();
             }
         });
     });
 
+    function updateLivefeedCount() {
+        document.getElementById('livefeedCount').textContent = String(feedCount);
+    }
+
     function connectClassFirebaseListeners() {
         if (unsubBoard) unsubBoard();
-        if (unsubFeed) unsubFeed();
+        if (unsubFeedAdd) unsubFeedAdd();
+        if (unsubFeedChange) unsubFeedChange();
+        if (unsubFeedRemove) unsubFeedRemove();
         if (unsubScores) unsubScores();
 
         const cls = currentUser.natoClass;
 
-        // 1. Digibord listener
+        // 1. Digibord listener (alleen hertekenen als Digibord actief is)
         unsubBoard = onValue(ref(db, `classes/${cls}/board`), (snap) => {
             boardObjects = snap.val() || {};
-            redrawDigibord();
+            if (activeScreenId === 'screen-board') {
+                redrawDigibord();
+            }
         });
 
-        // 2. Livefeed listener
-        unsubFeed = onValue(ref(db, `classes/${cls}/livefeed`), (snap) => {
-            const data = snap.val() || {};
-            const items = Object.entries(data).map(([id, val]) => ({ id, ...val }));
-            items.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-            renderLivefeed(items);
+        // 2. Livefeed listeners (incrementeel per kind — raakt #pvInput en bestaande kaarten nooit aan)
+        renderedFeedIds.clear();
+        feedCount = 0;
+        updateLivefeedCount();
+        const feedList = document.getElementById('livefeedList');
+        feedList.innerHTML = `<div class="feed-empty" style="color:#64748b; font-size:16px; text-align:center; padding:20px;">Nog geen aangiftes ingeleverd in deze klas...</div>`;
+
+        const feedRef = ref(db, `classes/${cls}/livefeed`);
+
+        unsubFeedAdd = onChildAdded(feedRef, (snap) => {
+            const key = snap.key;
+            if (!key || renderedFeedIds.has(key)) return;
+            renderedFeedIds.add(key);
+
+            const emptyEl = feedList.querySelector('.feed-empty');
+            if (emptyEl) emptyEl.remove();
+
+            const cardEl = createFeedCardElement(key, snap.val() || {});
+            const prevScrollTop = feedList.scrollTop;
+
+            feedList.prepend(cardEl);
+
+            // Voorkom verspringen als iemand verder omlaag aan het lezen is
+            if (prevScrollTop > 10) {
+                feedList.scrollTop = prevScrollTop + cardEl.offsetHeight + 12;
+            }
+
+            feedCount++;
+            updateLivefeedCount();
         });
 
-        // 3. Snake Scoreboard listener
+        unsubFeedChange = onChildChanged(feedRef, (snap) => {
+            const key = snap.key;
+            const val = snap.val() || {};
+            const existing = Array.from(feedList.children).find(el => el.dataset.feedId === key);
+            if (!existing) return;
+            const timeEl = existing.querySelector('.feed-time');
+            if (timeEl && typeof val.timestamp === 'number') {
+                timeEl.textContent = new Date(val.timestamp).toLocaleTimeString('nl-NL', {
+                    hour: '2-digit', minute: '2-digit', second: '2-digit'
+                });
+            }
+        });
+
+        unsubFeedRemove = onChildRemoved(feedRef, (snap) => {
+            const key = snap.key;
+            if (!renderedFeedIds.has(key)) return;
+            renderedFeedIds.delete(key);
+            const existing = Array.from(feedList.children).find(el => el.dataset.feedId === key);
+            if (existing) existing.remove();
+            feedCount = Math.max(0, feedCount - 1);
+            updateLivefeedCount();
+            if (feedCount === 0) {
+                feedList.innerHTML = `<div class="feed-empty" style="color:#64748b; font-size:16px; text-align:center; padding:20px;">Nog geen aangiftes ingeleverd in deze klas...</div>`;
+            }
+        });
+
+        // 3. Snake Scoreboard listener (alleen DOM bijwerken als Snake-scherm actief is)
         unsubScores = onValue(ref(db, `classes/${cls}/snakeScores`), (snap) => {
             const data = snap.val() || {};
             const players = Object.entries(data).map(([id, val]) => ({ id, ...val }));
@@ -1634,7 +1833,10 @@
                 }
                 return (a.elapsedMs || 9999999) - (b.elapsedMs || 9999999);
             });
-            renderScoreboard(players);
+            latestScoreboardPlayers = players;
+            if (activeScreenId === 'screen-snake') {
+                renderScoreboard(players);
+            }
         });
     }
 
@@ -1795,8 +1997,9 @@
 
     /* ============================================================
        SCHERM 3: ZINSONTLEDEN (25 ZINNEN)
-       Elke zin heeft: OW, PV, Gezegde (WG), LV, MWV en BWB.
-       Elke woordgrens heeft een klikbaar verticaal streepje (|).
+       - Tijdens de 25 zinnen wordt het antwoord NIET voorgezegd.
+       - Bij fout: alleen "Niet goed" + 2 tips.
+       - Pas na alle 25 gecontroleerde zinnen wordt de juiste verdeling getoond.
     ============================================================ */
     const ONTLEED_ZINNEN = [
         {
@@ -2052,6 +2255,8 @@
     ];
 
     let ontledenIdx = 0;
+    let all25Revealed = false;
+
     const ontledenState = ONTLEED_ZINNEN.map(z => {
         const words = [];
         const correctBars = new Set();
@@ -2063,13 +2268,12 @@
                 wordCursor++;
             });
             if (cIdx < z.chunks.length - 1) {
-                // Streepje vlak voor het volgende woord (tussen wordCursor-1 en wordCursor)
                 correctBars.add(wordCursor);
             }
         });
         return {
             words,
-            correctBars, // Set van indices (1..words.length-1), overeenkomend met "streepje vóór woord i"
+            correctBars,
             selectedBars: new Set(),
             checked: false,
             isCorrect: false
@@ -2080,8 +2284,12 @@
         const dotsEl = document.getElementById('sentenceDots');
         dotsEl.innerHTML = '';
         let totalCorrect = 0;
+        let totalChecked = 0;
+
         ontledenState.forEach((st, idx) => {
+            if (st.checked) totalChecked++;
             if (st.isCorrect) totalCorrect++;
+
             const b = document.createElement('button');
             b.type = 'button';
             b.className = 'dot-btn';
@@ -2094,8 +2302,40 @@
             });
             dotsEl.appendChild(b);
         });
+
         document.getElementById('ontledenCounter').textContent = `Zin ${ontledenIdx + 1} / ${ONTLEED_ZINNEN.length}`;
+        document.getElementById('ontledenCheckedCount').textContent = `Gecontroleerd: ${totalChecked} / ${ONTLEED_ZINNEN.length}`;
         document.getElementById('ontledenScore').textContent = `Score: ${totalCorrect} / ${ONTLEED_ZINNEN.length}`;
+    }
+
+    function renderOntledenOverview() {
+        const overviewEl = document.getElementById('ontledenAnswerOverview');
+        if (!all25Revealed) {
+            overviewEl.className = 'ontleden-overview';
+            overviewEl.innerHTML = '';
+            return;
+        }
+
+        const itemsHtml = ONTLEED_ZINNEN.map((zin, idx) => {
+            const st = ontledenState[idx];
+            const statusIcon = st.isCorrect ? '✅' : '❌';
+            const chunksHtml = zin.chunks.map(c =>
+                `<div class="chunk-chip"><span class="chunk-role">${escapeHtml(c.role)}</span><strong>${escapeHtml(c.text)}</strong></div>`
+            ).join('');
+
+            return `
+                <div class="overview-item">
+                    <div class="overview-item-head">${statusIcon} Zin ${idx + 1}: ${escapeHtml(zin.chunks.map(c => c.text).join(' | '))}</div>
+                    <div class="chunks-breakdown">${chunksHtml}</div>
+                </div>
+            `;
+        }).join('');
+
+        overviewEl.className = 'ontleden-overview show';
+        overviewEl.innerHTML = `
+            <h3 class="overview-title">✅ ALLE 25 ZINNEN GECONTROLEERD — CORRECTE VERDELING VAN ZINSDELEN</h3>
+            ${itemsHtml}
+        `;
     }
 
     function renderOntleden() {
@@ -2112,7 +2352,7 @@
                 barBtn.textContent = '|';
                 barBtn.title = `Scheidingsstreepje voor "${word}"`;
 
-                if (st.checked) {
+                if (all25Revealed && st.checked) {
                     const isSel = st.selectedBars.has(i);
                     const isCorr = st.correctBars.has(i);
                     if (isSel && isCorr) barBtn.classList.add('res-good');
@@ -2123,7 +2363,10 @@
                 }
 
                 barBtn.addEventListener('click', () => {
-                    st.checked = false;
+                    if (!all25Revealed) {
+                        st.checked = false;
+                        st.isCorrect = false;
+                    }
                     if (st.selectedBars.has(i)) st.selectedBars.delete(i);
                     else st.selectedBars.add(i);
                     document.getElementById('ontledenFeedback').className = 'ontleden-feedback';
@@ -2145,36 +2388,72 @@
         } else {
             showOntledenFeedback(st);
         }
+
+        renderOntledenOverview();
     }
 
     function showOntledenFeedback(st) {
         const fb = document.getElementById('ontledenFeedback');
+
+        if (!all25Revealed) {
+            // Antwoord nog NIET verklappen zolang de 25 zinnen nog niet zijn afgerond
+            if (st.isCorrect) {
+                fb.className = 'ontleden-feedback show ok';
+                fb.innerHTML = `<strong>✅ Goed!</strong> De zinsdelen zijn goed verdeeld. De volledige verdeling met benoeming verschijnt zodra alle 25 zinnen zijn gecontroleerd.`;
+            } else {
+                fb.className = 'ontleden-feedback show err';
+                fb.innerHTML = `
+                    <strong>❌ Niet goed.</strong>
+                    <ul class="ontleden-hints">
+                        <li>Een zinsdeel kan <strong>één woord</strong> of een <strong>groepje woorden</strong> zijn.</li>
+                        <li>Een zinsdeel kan <strong>in z'n geheel op een andere plek in de zin</strong> gezet worden.</li>
+                    </ul>
+                `;
+            }
+            return;
+        }
+
+        // Pas na alle 25 zinnen wordt de correcte verdeling van zinsdelen getoond
         const chunksHtml = ONTLEED_ZINNEN[ontledenIdx].chunks.map(c =>
             `<div class="chunk-chip"><span class="chunk-role">${escapeHtml(c.role)}</span><strong>${escapeHtml(c.text)}</strong></div>`
         ).join('');
 
         if (st.isCorrect) {
             fb.className = 'ontleden-feedback show ok';
-            fb.innerHTML = `<strong>✅ Uitstekend! Alle zinsdelen staan op de juiste plek.</strong><div class="chunks-breakdown">${chunksHtml}</div>`;
+            fb.innerHTML = `<strong>✅ Goed! Alle zinsdelen staan op de juiste plek.</strong><div class="chunks-breakdown">${chunksHtml}</div>`;
         } else {
             fb.className = 'ontleden-feedback show err';
-            fb.innerHTML = `<strong>❌ Nog niet helemaal goed.</strong> <span style="font-size:13px;">Groen = juist geplaatst | Rood = hoort binnen één zinsdeel | Oranje stippellijn = vergeten scheiding.</span><div class="chunks-breakdown">${chunksHtml}</div>`;
+            fb.innerHTML = `<strong>❌ Niet goed.</strong> <span style="font-size:16px;">Groen = juist geplaatst | Rood = hoort binnen één zinsdeel | Oranje stippellijn = vergeten scheiding.</span><div class="chunks-breakdown">${chunksHtml}</div>`;
         }
     }
 
     document.getElementById('checkOntledenBtn').addEventListener('click', () => {
         const st = ontledenState[ontledenIdx];
+        if (st.selectedBars.size === 0) {
+            const fb = document.getElementById('ontledenFeedback');
+            fb.className = 'ontleden-feedback show warn';
+            fb.innerHTML = `<strong>⚠️ Plaats eerst verticale streepjes (|) tussen de zinsdelen voordat je controleert.</strong>`;
+            return;
+        }
+
         st.checked = true;
         st.isCorrect = (st.selectedBars.size === st.correctBars.size) &&
             [...st.correctBars].every(b => st.selectedBars.has(b));
+
+        if (!all25Revealed && ontledenState.every(s => s.checked)) {
+            all25Revealed = true;
+        }
+
         renderOntleden();
     });
 
     document.getElementById('resetOntledenBtn').addEventListener('click', () => {
         const st = ontledenState[ontledenIdx];
         st.selectedBars.clear();
-        st.checked = false;
-        st.isCorrect = false;
+        if (!all25Revealed) {
+            st.checked = false;
+            st.isCorrect = false;
+        }
         renderOntleden();
     });
 
@@ -2202,31 +2481,24 @@
     function getSamirAntwoord(rawInput) {
         const v = rawInput.toLowerCase().trim();
 
-        // 1. Alle personalia
         if (v.includes("alle") && (v.includes("gegevens") || v.includes("personalia") || v.includes("alles"))) {
             return "Oké agent, schrijf maar mee: ik heet Samir el-Jansani, geboren op 12 juli 1998 in Rotterdam. Mijn ID-kaartnummer is NL88442211 en mijn BSN is 199.288.374. Ik woon aan de West-Kruiskade 42, postcode 3014 AS in Rotterdam. Mijn nummer is 06-48291033.";
         }
-        // 2. ID / Legitimatie
         if (v.includes("id") || v.includes("identiteit") || v.includes("paspoort") || v.includes("legitim") || v.includes("rijbewijs")) {
             return "Natuurlijk agent, hier is mijn Nederlandse ID-kaart. De naam is Samir el-Jansani en het documentnummer is NL88442211. Ik ben geboren op 12 juli 1998 in Rotterdam.";
         }
-        // 3. Naam
         if (v.includes("naam") || v.includes("heet je") || v.includes("wie ben")) {
             return "Ik ben Samir el-Jansani, geboren op 12 juli 1998 in Rotterdam.";
         }
-        // 4. Geboortedatum / Leeftijd
         if (v.includes("geboorte") || v.includes("geboren") || v.includes("leeftijd") || v.includes("hoe oud")) {
             return "Mijn geboortedatum is 12 juli 1998, in Rotterdam. Ik ben dus 28 jaar oud.";
         }
-        // 5. Adres / Woonplaats
         if (v.includes("adres") || v.includes("woon") || v.includes("straat") || v.includes("postcode")) {
             return "Ik woon aan de West-Kruiskade 42, 3014 AS in Rotterdam.";
         }
-        // 6. BSN / Telefoonnummer / Contact
         if (v.includes("bsn") || v.includes("telefoonnummer") || v.includes("bereik") || v.includes("contact")) {
             return "Mijn BSN is 199.288.374 en u kunt mij bereiken op 06-48291033.";
         }
-        // 7. Decoromschrijving / Locatie / Omgeving / Weer / Verlichting / Camera
         if (
             v.includes("decor") || v.includes("omgeving") || v.includes("sfeer") || v.includes("weer") ||
             v.includes("regen") || v.includes("licht") || v.includes("bankje") || v.includes("plein") ||
@@ -2235,15 +2507,12 @@
         ) {
             return "Het gebeurde op het Stadhuisplein in Rotterdam, bij de drie lange houten bankjes tegenover de glazen hoofdingang van het stadhuis. Het was grauw weer en het miezerde zachtjes; de lantaarnpalen stonden nog niet aan, al scheen er wel licht vanuit de hal van het stadhuis. Achter het bankje staat een grote betonnen plantenbak met groen en links aan de gevel hangt een beveiligingscamera die precies op dat bankje gericht staat. De grijze stoeptegels waren nat en glad.";
         }
-        // 8. Tijdstip / Wanneer
         if (v.includes("hoe laat") || v.includes("tijd") || v.includes("wanneer") || v.includes("datum") || v.includes("dag") || v.includes("gisteren")) {
             return "Het gebeurde gisterenmiddag, zondag 15 november, precies rond 15:15 uur. Ik weet de tijd zo zeker omdat ik net op mijn scherm naar de klok keek voordat hij voor me stond.";
         }
-        // 9. Wapen / Bedreiging / Geweld
         if (v.includes("wapen") || v.includes("mes") || v.includes("steek") || v.includes("bedreig") || v.includes("geweld") || v.includes("zei") || v.includes("riep")) {
             return "Hij trok uit zijn jaszak een groot glimmend keukenmes met een lemmet van ongeveer twintig centimeter en een zwart handvat. Hij hield de punt op twintig centimeter van mijn borst en schreeuwde met een schorre stem: 'Geef die telefoon nu, anders steek ik je!' Daardoor durfde ik niks anders te doen dan mijn telefoon afgeven.";
         }
-        // 10. Signalement / Dader / Kleding
         if (
             v.includes("uiterlijk") || v.includes("signalement") || v.includes("dader") || v.includes("kleding") ||
             v.includes("muts") || v.includes("trainingspak") || v.includes("lengte") || v.includes("ogen") ||
@@ -2251,35 +2520,28 @@
         ) {
             return "Het was een lange man van ongeveer 1,88 meter met een slank, atletisch postuur. Hij droeg een zwart Nike-trainingspak met witte strepen over de mouwen, zwarte handschoenen en zwarte sneakers. Over zijn gezicht zat een zwarte bivakmuts waardoor ik alleen zijn donkerbruine ogen en zware wenkbrauwen zag. Hij sprak Nederlands met een schorre stem en een duidelijk Rotterdams accent.";
         }
-        // 11. Gestolen goed / Telefoon / Waarde / Eigendom
         if (
             v.includes("gestolen") || v.includes("telefoon") || v.includes("iphone") || v.includes("goed") ||
             v.includes("schade") || v.includes("waarde") || v.includes("eigendom") || v.includes("weg") || v.includes("wat")
         ) {
             return "Hij heeft mijn nieuwe iPhone 15 Pro (256 GB, natural titanium) in een doorzichtig siliconen hoesje weggenomen. Die telefoon is ongeveer 1.200 euro waard en volledig mijn eigendom; de aankoopbon heb ik thuis liggen. Ik heb hem absoluut geen toestemming gegeven om mijn telefoon mee te nemen.";
         }
-        // 12. Vluchtrichting
         if (v.includes("vlucht") || v.includes("rende") || v.includes("richting") || v.includes("kant") || v.includes("metro") || v.includes("vervoer")) {
             return "Zodra hij mijn iPhone uit mijn hand griste, rende hij op volle snelheid weg richting de Coolsingel en Metro Stadhuis. Daarna zag ik hem linksaf een smal steegje achter de winkels induiken.";
         }
-        // 13. Getuigen / Omstanders
         if (v.includes("getuige") || v.includes("iemand") || v.includes("omstander") || v.includes("mensen") || v.includes("druk")) {
             return "Het was vrij rustig door het miezerige weer, maar bij de tramhalte op ongeveer twintig meter afstand stond een oudere vrouw onder een rode paraplu die geschrokken onze kant op keek. Verder liepen er twee jongens aan de overkant van het plein.";
         }
-        // 14. Letsel / Gevoel / Hoe gaat het
         if (v.includes("letsel") || v.includes("gewond") || v.includes("pijn") || v.includes("geraakt") || v.includes("hoe gaat") || v.includes("voel")) {
             return "Gelukkig heeft hij mij lichamelijk niet geraakt met het mes, dus ik heb geen verwondingen. Wel ben ik enorm geschrokken en mijn benen trilden nog een kwartier na toen ik op dat natte bankje zat.";
         }
-        // 15. Aangifte / Verhaal / Verloop / Hoe
         if (v.includes("aangifte") || v.includes("onderteken") || v.includes("verloop") || v.includes("gebeurd") || v.includes("vertel") || v.includes("hoe")) {
             return "Ik zat rond 15:15 uur op het houten bankje voor het stadhuis mijn berichten te lezen toen de man uit de richting van de betonnen plantenbak op me afliep. Hij zette het glimmende mes op mijn borst, eiste mijn iPhone 15 Pro op en rende weg richting de Coolsingel. Ik wil hiervan officieel aangifte doen zodat jullie hem kunnen opsporen.";
         }
-        // 16. Begroeting
         if (v.includes("hallo") || v.includes("hoi") || v.includes("yo") || v.includes("hey") || v.includes("goedem") || v.includes("rustig")) {
             return "Goedendag agent. Fijn dat u me wilt helpen met deze aangifte van straatroof. Ik zit nog vol spanning van gisteren op het Stadhuisplein, dus vraagt u maar alles over mijn gegevens, het decor, het wapen of de dader.";
         }
 
-        // 17. Slimme contextuele antwoorden (NOOIT "dat weet ik niet" of "ik snap je niet")
         const contextAntwoorden = [
             "Wat ik me daarover nog goed herinner: tijdens het hele incident op het Stadhuisplein stonden het miezerige weer, de natte stoeptegels en die glazen entree van het stadhuis me scherp bij. De dader kwam heel doelgericht achter die grote betonnen plantenbak vandaan.",
             "Om dat voor uw proces-verbaal zo volledig mogelijk te maken: hij handelde binnen twintig seconden. Ik had echt geen enkele kans om weg te lopen vanaf het houten bankje omdat hij het mes recht voor mijn borst hield en meteen mijn iPhone 15 Pro opeiste.",
@@ -2322,7 +2584,6 @@
         chip.addEventListener('click', () => stuurSamirVraag(chip.dataset.q));
     });
 
-    // Veilige PV Tekstanalyse (corruptievrij: escapt eerst HTML en matched alleen platte tekstsegmenten)
     function analyseerPvTekst(rawText) {
         const stats = { w: 0, wet: 0, ovt: 0, vd: 0, best: 0 };
 
@@ -2354,7 +2615,6 @@
             }
         ];
 
-        // Segmentlijst: { text, cls }
         let segments = [{ text: rawText, cls: null }];
 
         for (const rule of rules) {
@@ -2390,9 +2650,59 @@
         return { html, stats };
     }
 
-    document.getElementById('inleverPvBtn').addEventListener('click', () => {
+    function createFeedCardElement(key, item) {
+        const card = document.createElement('div');
+        card.className = 'feed-card';
+        card.dataset.feedId = key;
+
+        const timeStr = typeof item.timestamp === 'number'
+            ? new Date(item.timestamp).toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+            : 'Zojuist';
+        const st = item.stats || { w: 0, wet: 0, ovt: 0, vd: 0, best: 0 };
+        const { html } = analyseerPvTekst(item.text || '');
+
+        card.innerHTML = `
+            <div class="feed-meta">
+                <span class="feed-author">👮 ${escapeHtml(item.studentName || 'Student')}</span>
+                <span class="feed-time">${escapeHtml(timeStr)}</span>
+            </div>
+            <div class="feed-text">${html}</div>
+            <div class="feed-badges">
+                <span class="feed-badge">W's: ${st.w}</span>
+                <span class="feed-badge">Wetenschap: ${st.wet}</span>
+                <span class="feed-badge">OVT: ${st.ovt}</span>
+                <span class="feed-badge">VD: ${st.vd}</span>
+                <span class="feed-badge" style="background:#ede7f6;">Bestanddelen: ${st.best}</span>
+            </div>
+        `;
+        return card;
+    }
+
+    let pvStatusTimer = null;
+    function showPvStatus(message, isError = false) {
+        const el = document.getElementById('pvSaveStatus');
+        el.textContent = message;
+        el.className = `pv-save-status ${isError ? 'err' : 'ok'}`;
+        if (pvStatusTimer) clearTimeout(pvStatusTimer);
+        pvStatusTimer = setTimeout(() => {
+            el.textContent = '';
+            el.className = 'pv-save-status';
+        }, 5000);
+    }
+
+    let isSubmittingPv = false;
+    document.getElementById('inleverPvBtn').addEventListener('click', async () => {
+        if (isSubmittingPv) return;
+        if (!currentUser) {
+            document.getElementById('loginOverlay').classList.remove('hidden');
+            return;
+        }
+
         const tekst = document.getElementById('pvInput').value.trim();
-        if (!tekst) return;
+        if (!tekst) {
+            showPvStatus('Typ eerst je proces-verbaal voordat je inlevert.', true);
+            return;
+        }
 
         const { html, stats } = analyseerPvTekst(tekst);
 
@@ -2406,96 +2716,80 @@
         document.getElementById('s-vd').innerText = stats.vd;
         document.getElementById('s-best').innerText = stats.best;
 
-        if (currentUser) {
-            push(ref(db, `classes/${currentUser.natoClass}/livefeed`), {
+        const btn = document.getElementById('inleverPvBtn');
+        isSubmittingPv = true;
+        btn.disabled = true;
+        btn.textContent = 'BEZIG MET OPSLAAN...';
+
+        try {
+            await push(ref(db, `classes/${currentUser.natoClass}/livefeed`), {
                 studentName: currentUser.name,
                 natoClass: currentUser.natoClass,
                 text: tekst,
                 stats,
-                timestamp: Date.now()
+                timestamp: serverTimestamp()
             });
+            showPvStatus(`✅ Ingeleverd! Iedereen in klas ${currentUser.natoClass} ziet jouw tekst in de livefeed.`, false);
+        } catch (err) {
+            console.error(err);
+            showPvStatus('❌ Opslaan in de database mislukt. Controleer je internetverbinding.', true);
+        } finally {
+            isSubmittingPv = false;
+            btn.disabled = false;
+            btn.textContent = 'INLEVEREN & PLAATS IN LIVEFEED';
         }
     });
 
-    function renderLivefeed(items) {
-        const list = document.getElementById('livefeedList');
-        if (!items || items.length === 0) {
-            list.innerHTML = `<div style="color:#64748b; font-size:13px; text-align:center; padding:20px;">Nog geen aangiftes ingeleverd in deze klas...</div>`;
-            return;
-        }
-
-        list.innerHTML = items.map(item => {
-            const timeStr = item.timestamp
-                ? new Date(item.timestamp).toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
-                : '';
-            const st = item.stats || { w: 0, wet: 0, ovt: 0, vd: 0, best: 0 };
-            const { html } = analyseerPvTekst(item.text || '');
-
-            return `
-                <div class="feed-card">
-                    <div class="feed-meta">
-                        <span class="feed-author">👮 ${escapeHtml(item.studentName || 'Student')}</span>
-                        <span>${escapeHtml(timeStr)}</span>
-                    </div>
-                    <div class="feed-text">${html}</div>
-                    <div class="feed-badges">
-                        <span class="feed-badge">W's: ${st.w}</span>
-                        <span class="feed-badge">Wetenschap: ${st.wet}</span>
-                        <span class="feed-badge">OVT: ${st.ovt}</span>
-                        <span class="feed-badge">VD: ${st.vd}</span>
-                        <span class="feed-badge" style="background:#ede7f6;">Bestanddelen: ${st.best}</span>
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
-
     /* ============================================================
-       SCHERM 5: WOORDENSCHAT SNAKE + REALTIME KLAS-SCOREBOARD
+       SCHERM 5: WOORDENSCHAT SNAKE + REALTIME KLAS-SCOREBOARD (46 WOORDEN)
     ============================================================ */
     const VOCAB = [
-        { word: "Associatie", desc: "onwillekeurig aangeleerde verbindingen van gedachten" },
-        { word: "Extrinsiek", desc: "als iets van buitenaf komt" },
-        { word: "Confirmeren", desc: "bekrachtigen, bevestigen" },
-        { word: "Mummificeren", desc: "als lichaam balsemen" },
-        { word: "Summiere", desc: "beknopte, korte" },
-        { word: "Liquiditeit", desc: "het vermogen om direct opeisbare vorderingen uit te betalen" },
-        { word: "Eclatant", desc: "schitterend, overweldigend" },
-        { word: "Kastes", desc: "streng van elkaar afgescheiden lagen van de bevolking in de maatschappij van de hindoes" },
-        { word: "Inherent", desc: "onafscheidelijk verbonden met; van nature behorend bij" },
-        { word: "Lucratief", desc: "erg winstgevend" },
-        { word: "Dissident", desc: "andersdenkende op gebied van politiek of godsdienst" },
-        { word: "Liga", desc: "verbond" },
-        { word: "Geografie", desc: "wetenschappelijke beschrijving van de aarde" },
-        { word: "Rancune", desc: "blijvende boosheid" },
-        { word: "Pleonasme", desc: "stijlfiguur, waarbij een vaste eigenschap van een woord ten overvloede apart genoemd wordt, bijvoorbeeld: ‘een witte schimmel’" },
-        { word: "Deceptie", desc: "teleurstelling, ontgoocheling" },
-        { word: "Incisie", desc: "insnijding, snede" },
-        { word: "Infantiel", desc: "kinderlijk" },
-        { word: "Geologie", desc: "wetenschap over de bodem van de aarde" },
-        { word: "Corridor", desc: "natuurlijke (rivier, beek, bos) of half natuurlijk (houtwal, sloot, berm, wildviaduct) verbindingselementen tussen grotere natuurgebieden" },
-        { word: "Talud", desc: "helling; glooiing van dijken, spoorbanen, etc." },
-        { word: "Malaise", desc: "slechte gang van zaken, toestand van laagconjunctuur" },
-        { word: "Prijs", desc: "te betalen of betaald bedrag" },
-        { word: "Animositeit", desc: "vijandigheid" },
-        { word: "Groepage", desc: "het samen verzenden van verschillende vrachten, ter beperking van expeditiekosten" },
-        { word: "Manipuleren", desc: "beïnvloeden, in een bepaalde richting dwingen" },
-        { word: "Forceren", desc: "met geweld of met weinig passende middelen normale ontwikkeling doordrijven" },
-        { word: "Potentaat", desc: "autoritair persoon" },
-        { word: "Guerrilla", desc: "strijd van ongeregelde, kleine maar toch gewapende groepen tegen de regering" },
-        { word: "Essays", desc: "korte teksten waarin iemand zijn persoonlijke gedachten opschrijft over een bepaald onderwerp" },
-        { word: "Lectuur", desc: "leesstof, leesvoer" },
-        { word: "Altruïst", desc: "onbaatzuchtig mens, iemand bij wie anderen altijd voorop staan" },
-        { word: "Pacifist", desc: "iemand die geweld afwijst als middel om een doel te bereiken" },
-        { word: "Bourgeoisie", desc: "gevestigde burgerij, bezittende klasse" },
-        { word: "Kapitalisten", desc: "mensen die erop uit zijn veel geld te verdienen" },
-        { word: "Incourant", desc: "niet of moeilijk verkoopbaar" },
-        { word: "Decent", desc: "fatsoenlijk; eerbaar" },
-        { word: "Electorale", desc: "betrekking hebbend op verkiezingen" },
-        { word: "Cumulatieve", desc: "ophopende, toenemend" },
-        { word: "Desolaat", desc: "troosteloos; verlaten" },
-        { word: "Domicilie", desc: "woonplaats, vaste verblijfplaats" },
-        { word: "Instituut", desc: "instelling voor onderzoek of onderwijs" }
+        { word: "Manueel", desc: "betrekking hebbend op het gebruik van de handen" },
+        { word: "Omnivoor", desc: "alleseter" },
+        { word: "Carnivoor", desc: "vleeseter" },
+        { word: "Prolongatie", desc: "verlenging" },
+        { word: "Deformatie", desc: "vervorming, misvorming" },
+        { word: "Heemkunde", desc: "kennis van land en volk" },
+        { word: "Intrige", desc: "verwikkeling, oneerlijke en slinkse methode om een doel te bereiken" },
+        { word: "Gebrouilleerd", desc: "ruzie hebbend" },
+        { word: "Gedecideerd", desc: "vastbesloten, beslist" },
+        { word: "Kanton", desc: "zeer afzonderlijk deel van een staat (bijv. Zwitserland)" },
+        { word: "Transformatie", desc: "gedaanteverwisseling, omzetting" },
+        { word: "Occupatie", desc: "bezitting" },
+        { word: "Correlatie", desc: "onderlinge afhankelijkheid" },
+        { word: "Integratie", desc: "het op een bepaalde manier één worden met een andere groep" },
+        { word: "Analist", desc: "iemand die onderzoek doet naar stoffen in een laboratorium" },
+        { word: "Dermatoloog", desc: "medisch specialist voor huid- en geslachtsziekten" },
+        { word: "Neonazi", desc: "moderne vorm van nationaalsocialisme" },
+        { word: "Nonchalante", desc: "onverschillige" },
+        { word: "Mondaine", desc: "werelds, luxe en genot betreffend" },
+        { word: "Homoniemen", desc: "woorden die je hetzelfde schrijft maar die een andere betekenis hebben" },
+        { word: "Synoniemen", desc: "woorden met dezelfde betekenis als een ander woord bijvoorbeeld ‘aandacht’ en ‘opmerkzaamheid’" },
+        { word: "Mousserende", desc: "bruisende" },
+        { word: "Copieuze", desc: "rijkelijk, overvloedig" },
+        { word: "Arealen", desc: "verbreidingsgebieden" },
+        { word: "Cohesies", desc: "samenhangen, aantrekkingskrachten" },
+        { word: "Discipel", desc: "volgeling, leerling" },
+        { word: "Komediant", desc: "toneelspeler; aansteller" },
+        { word: "Tribunaal", desc: "een bijzondere rechtbank waaraan ook mensen deelnemen die geen rechter zijn" },
+        { word: "Interruptie", desc: "onderbreking" },
+        { word: "Interpretatie", desc: "verklaring; uitleg" },
+        { word: "Relevantie", desc: "belangrijkheid" },
+        { word: "Adept", desc: "iemand die de stijl, de ideeën van een leidend kunstenaar, politicus enz. navolgt" },
+        { word: "Stoïcijns", desc: "onverstoorbaar; onaangedaan" },
+        { word: "Coup", desc: "staatsgreep, machtsovername" },
+        { word: "Mogendheid", desc: "onafhankelijke staat" },
+        { word: "Lancet", desc: "dubbelsnedig operatiemes" },
+        { word: "Abbreviaties", desc: "afkortingen" },
+        { word: "Discrepantie", desc: "tegenstrijdigheid, tegenspraak" },
+        { word: "Navenant", desc: "overeenkomstig; naar verhouding" },
+        { word: "Assemblee", desc: "algemene vergadering" },
+        { word: "Hospice", desc: "plaats, met huiselijke sfeer, die in terminale zorg voorziet" },
+        { word: "Mondiale", desc: "wereldwijd" },
+        { word: "Rancuneus", desc: "haatdragend" },
+        { word: "Reprimande", desc: "terechtwijzing; uitbrander" },
+        { word: "Recenseren", desc: "beoordelen van culturele zaken" },
+        { word: "Syllabe", desc: "lettergreep" }
     ];
 
     const snakeCanvas = document.getElementById('gameCanvas');
@@ -2527,7 +2821,6 @@
     let tickInterval = 145;
     let lastTick = 0;
 
-    // Timer voor Snake + Scoreboard
     let elapsedMs = 0;
     let activeRunStart = 0;
     let lastScoreboardSync = 0;
@@ -2896,7 +3189,7 @@
 
         const modal = document.getElementById('modalBox');
         modal.className = 'modal success';
-        document.getElementById('modalTitle').innerText = '🏆 Alle 42 begrippen gehaald!';
+        document.getElementById('modalTitle').innerText = `🏆 Alle ${VOCAB.length} begrippen gehaald!`;
         document.getElementById('modalDesc').innerHTML = `Fantastisch! Tijd: <b>${formatTimeMs(elapsedMs)}</b> | Lengte: <b>${snake.length}</b> vakjes!`;
         document.getElementById('modalFeedback').style.display = 'none';
         document.getElementById('modalActionBtn').innerText = '🔄 NOG EEN KEER SPELEN';
@@ -3190,6 +3483,7 @@
     }
 
     document.getElementById('highScoreVal').innerText = highScore;
+    updateSnakeHUD();
     requestAnimationFrame(snakeLoop);
 </script>
 </body>
