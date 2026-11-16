@@ -170,7 +170,7 @@
             flex-direction: column;
         }
 
-        /* ================= SCHERM 1: NATO-KLAS INLOG ================= */
+        /* ================= SCHERM 1: NATO-KLAS INLOG + DATABASE RESET ================= */
         .login-overlay {
             position: fixed;
             inset: 0;
@@ -180,6 +180,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            overflow-y: auto;
         }
 
         .login-overlay.hidden {
@@ -193,6 +194,7 @@
             padding: 30px 34px;
             width: 100%;
             max-width: 560px;
+            margin: auto;
             box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
             color: var(--politie-donkerblauw);
         }
@@ -293,6 +295,106 @@
             margin-bottom: 12px;
             min-height: 20px;
         }
+
+        .login-db-reset-section {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1.5px solid #e2e8f0;
+        }
+
+        .db-reset-trigger {
+            width: 100%;
+            padding: 10px 14px;
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1.5px solid #fca5a5;
+            border-radius: 9px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .db-reset-trigger:hover {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+
+        .db-reset-confirm {
+            display: none;
+            margin-top: 10px;
+            padding: 12px 14px;
+            background: #fff1f2;
+            border: 1.5px solid #fda4af;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #881337;
+        }
+
+        .db-reset-confirm.show {
+            display: block;
+        }
+
+        .db-reset-check {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0 10px 0;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .db-reset-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .db-reset-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 7px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .db-reset-btn.danger {
+            background: #dc2626;
+            color: white;
+        }
+
+        .db-reset-btn.danger:hover:not(:disabled) {
+            background: #b91c1c;
+        }
+
+        .db-reset-btn.secondary {
+            background: #991b1b;
+            color: white;
+        }
+
+        .db-reset-btn.cancel {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .db-reset-btn:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
+
+        .db-reset-status {
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            min-height: 18px;
+        }
+
+        .db-reset-status.ok { color: var(--succes-groen); }
+        .db-reset-status.err { color: var(--fout-rood); }
+        .db-reset-status.info { color: #1d4ed8; }
 
         /* ================= SCHERM 2: DIGIBORD ================= */
         #screen-board {
@@ -1340,6 +1442,28 @@
 
         <div class="login-error" id="loginError"></div>
         <button class="login-submit" id="loginSubmitBtn">START LESOMGEVING</button>
+
+        <!-- Docent-resetknop voor de database aan het begin van de les -->
+        <div class="login-db-reset-section">
+            <button type="button" class="db-reset-trigger" id="dbResetOpenBtn">
+                🗑️ Database legen (alle ingeleverde teksten verwijderen)
+            </button>
+
+            <div class="db-reset-confirm" id="dbResetConfirmBox">
+                <strong>Bevestig verwijderen van teksten uit de database:</strong>
+                <label class="db-reset-check">
+                    <input type="checkbox" id="dbResetIncludeAllData">
+                    Ook Digibord en Snake-scoreboard legen
+                </label>
+                <div class="db-reset-actions">
+                    <button type="button" class="db-reset-btn danger" id="dbResetClassBtn" style="display:none;"></button>
+                    <button type="button" class="db-reset-btn secondary" id="dbResetAllBtn">Alle klassen legen</button>
+                    <button type="button" class="db-reset-btn cancel" id="dbResetCancelBtn">Annuleren</button>
+                </div>
+            </div>
+
+            <div class="db-reset-status" id="dbResetStatus"></div>
+        </div>
     </div>
 </div>
 
@@ -1569,6 +1693,7 @@
     import {
         getDatabase,
         ref,
+        get,
         onValue,
         onChildAdded,
         onChildChanged,
@@ -1647,9 +1772,96 @@
             natoGrid.querySelectorAll('.nato-btn').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
             document.getElementById('loginError').textContent = '';
+            updateResetClassButtonLabel();
         });
         natoGrid.appendChild(btn);
     });
+
+    function updateResetClassButtonLabel() {
+        const classBtn = document.getElementById('dbResetClassBtn');
+        if (selectedClassTemp) {
+            classBtn.style.display = 'inline-block';
+            classBtn.textContent = `Alleen klas ${selectedClassTemp} legen`;
+        } else {
+            classBtn.style.display = 'none';
+        }
+    }
+
+    // Database resetlogica in het inlogscherm
+    const dbResetConfirmBox = document.getElementById('dbResetConfirmBox');
+    const dbResetStatus = document.getElementById('dbResetStatus');
+    const dbResetClassBtn = document.getElementById('dbResetClassBtn');
+    const dbResetAllBtn = document.getElementById('dbResetAllBtn');
+
+    function setDbResetStatus(msg, type = 'ok') {
+        dbResetStatus.textContent = msg;
+        dbResetStatus.className = `db-reset-status ${type}`;
+    }
+
+    document.getElementById('dbResetOpenBtn').addEventListener('click', () => {
+        updateResetClassButtonLabel();
+        dbResetConfirmBox.classList.toggle('show');
+        dbResetStatus.textContent = '';
+    });
+
+    document.getElementById('dbResetCancelBtn').addEventListener('click', () => {
+        dbResetConfirmBox.classList.remove('show');
+    });
+
+    async function executeDatabaseReset(scope) {
+        const includeAllData = document.getElementById('dbResetIncludeAllData').checked;
+        dbResetClassBtn.disabled = true;
+        dbResetAllBtn.disabled = true;
+        setDbResetStatus('Bezig met legen van de database...', 'info');
+
+        try {
+            if (scope === 'class' && selectedClassTemp) {
+                if (includeAllData) {
+                    await remove(ref(db, `classes/${selectedClassTemp}`));
+                    setDbResetStatus(`✅ Alle teksten, Digibord en Snake-scores van klas ${selectedClassTemp} zijn verwijderd.`, 'ok');
+                } else {
+                    await remove(ref(db, `classes/${selectedClassTemp}/livefeed`));
+                    setDbResetStatus(`✅ Alle ingeleverde teksten van klas ${selectedClassTemp} zijn verwijderd.`, 'ok');
+                }
+            } else {
+                const classesSnap = await get(ref(db, 'classes'));
+                if (!classesSnap.exists()) {
+                    setDbResetStatus('ℹ️ De database was al leeg.', 'info');
+                } else {
+                    const updates = {};
+                    classesSnap.forEach((childSnap) => {
+                        if (includeAllData) {
+                            updates[`classes/${childSnap.key}`] = null;
+                        } else if (childSnap.hasChild('livefeed')) {
+                            updates[`classes/${childSnap.key}/livefeed`] = null;
+                        }
+                    });
+
+                    if (Object.keys(updates).length === 0) {
+                        setDbResetStatus('ℹ️ Er stonden geen ingeleverde teksten in de database.', 'info');
+                    } else {
+                        await update(ref(db), updates);
+                        setDbResetStatus(
+                            includeAllData
+                                ? '✅ Alle klassen (teksten, Digibord en scoreboard) zijn volledig geleegd!'
+                                : '✅ Alle ingeleverde teksten uit alle klassen zijn uit de database verwijderd!',
+                            'ok'
+                        );
+                    }
+                }
+            }
+            dbResetConfirmBox.classList.remove('show');
+        } catch (err) {
+            console.error(err);
+            setDbResetStatus('❌ Verwijderen mislukt. Controleer de internetverbinding of database-rechten.', 'err');
+        } finally {
+            dbResetClassBtn.disabled = false;
+            dbResetAllBtn.disabled = false;
+        }
+    }
+
+    dbResetClassBtn.addEventListener('click', () => executeDatabaseReset('class'));
+    dbResetAllBtn.addEventListener('click', () => executeDatabaseReset('all'));
 
     function getOrCreateStudentId(name, natoClass) {
         const key = `q2_les3_sid_${natoClass}_${name.toLowerCase()}`;
@@ -1668,9 +1880,7 @@
     function loadPvDraft() {
         const pvEl = document.getElementById('pvInput');
         const savedDraft = localStorage.getItem(getPvDraftKey());
-        if (savedDraft !== null) {
-            pvEl.value = savedDraft;
-        }
+        pvEl.value = savedDraft !== null ? savedDraft : '';
     }
 
     document.getElementById('pvInput').addEventListener('input', (e) => {
@@ -1687,10 +1897,12 @@
         document.getElementById('livefeedClassLabel').textContent = natoClass.toUpperCase();
         document.getElementById('sbClassLabel').textContent = natoClass.toUpperCase();
         document.getElementById('loginOverlay').classList.add('hidden');
+        dbResetConfirmBox.classList.remove('show');
 
         natoGrid.querySelectorAll('.nato-btn').forEach(b => {
             b.classList.toggle('selected', b.dataset.cls === natoClass);
         });
+        updateResetClassButtonLabel();
 
         loadPvDraft();
         connectClassFirebaseListeners();
@@ -1717,6 +1929,8 @@
 
     document.getElementById('switchUserBtn').addEventListener('click', () => {
         if (gameState === 'playing') togglePause();
+        updateResetClassButtonLabel();
+        dbResetStatus.textContent = '';
         document.getElementById('loginOverlay').classList.remove('hidden');
     });
 
@@ -1785,7 +1999,6 @@
 
             feedList.prepend(cardEl);
 
-            // Voorkom verspringen als iemand verder omlaag aan het lezen is
             if (prevScrollTop > 10) {
                 feedList.scrollTop = prevScrollTop + cardEl.offsetHeight + 12;
             }
@@ -2396,7 +2609,6 @@
         const fb = document.getElementById('ontledenFeedback');
 
         if (!all25Revealed) {
-            // Antwoord nog NIET verklappen zolang de 25 zinnen nog niet zijn afgerond
             if (st.isCorrect) {
                 fb.className = 'ontleden-feedback show ok';
                 fb.innerHTML = `<strong>✅ Goed!</strong> De zinsdelen zijn goed verdeeld. De volledige verdeling met benoeming verschijnt zodra alle 25 zinnen zijn gecontroleerd.`;
@@ -2413,7 +2625,6 @@
             return;
         }
 
-        // Pas na alle 25 zinnen wordt de correcte verdeling van zinsdelen getoond
         const chunksHtml = ONTLEED_ZINNEN[ontledenIdx].chunks.map(c =>
             `<div class="chunk-chip"><span class="chunk-role">${escapeHtml(c.role)}</span><strong>${escapeHtml(c.text)}</strong></div>`
         ).join('');
